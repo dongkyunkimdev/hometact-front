@@ -1,5 +1,9 @@
 module.exports = {
     root: true,
+    env: {
+      "node": true,
+      "commonjs": true
+    },
     extends: [
       'eslint:recommended',
       'plugin:vue/essential',
