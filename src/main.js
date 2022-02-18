@@ -4,6 +4,7 @@ import router from '@/router/index';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import store from '@/store/index';
 import VueQuillEditor from 'vue-quill-editor';
+import Vuelidate from 'vuelidate';
 
 import 'quill/dist/quill.core.css'; // import styles
 import 'quill/dist/quill.snow.css'; // for snow theme
@@ -14,6 +15,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueQuillEditor);
+Vue.use(Vuelidate);
 
 Vue.config.productionTip = false;
 

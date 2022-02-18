@@ -91,11 +91,11 @@ export default {
 				};
 				this.tokenDto = await login(loginDto);
 				this.setVuex(this.email, this.tokenDto);
-				this.closeModal();
+				// this.closeModal();
+				this.$router.go('/');
 			} catch (error) {
 				this.logMessage = error.response.data;
 				alert(this.logMessage.message);
-			} finally {
 				this.initForm();
 			}
 		},

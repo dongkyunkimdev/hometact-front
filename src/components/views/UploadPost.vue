@@ -7,6 +7,7 @@
 				type="text"
 				name="title"
 				id="title"
+				ref="title"
 				placeholder="Title"
 			/>
 		</div>
@@ -76,11 +77,15 @@
 		</div>
 		<div class="row quill-editor-wrap">
 			<quill-editor
-				ref="myQuillEditor"
+				class="content"
+				name="content"
+				id="content"
+				ref="content"
 				v-model="content"
 				:options="editorOption"
 			/>
 		</div>
+		<p v-if="$v.content.$error" id="contentError"></p>
 		<div class="btn-toolbar justify-content-end">
 			<button
 				type="button"
@@ -107,6 +112,7 @@
 <script>
 import { quillEditor } from 'vue-quill-editor';
 import { uploadPost } from '@/api/index';
+import { required, maxLength } from 'vuelidate/lib/validators';
 
 export default {
 	data: function () {
@@ -130,19 +136,45 @@ export default {
 			},
 		};
 	},
+	validations: {
+		title: {
+			required,
+			maxLength: maxLength(500),
+		},
+		content: {
+			required,
+			maxLength: maxLength(500),
+		},
+	},
 	methods: {
 		cancelBtn() {
 			this.$router.push('/');
 		},
 		async uploadAction() {
 			try {
-				const postDto = {
-					title: this.title,
-					content: this.content,
-				};
-				await uploadPost(postDto);
-				alert('등록되었습니다');
-				this.$router.push('/');
+				this.$v.$touch();
+				if (this.$v.$invalid) {
+					for (let key in Object.keys(this.$v)) {
+						const input = Object.keys(this.$v)[key];
+						if (input.includes('$')) return false;
+						if (this.$v[input].$error) {
+							if (input === 'content') {
+								alert('내용을 입력해주세요');
+								break;
+							}
+							this.$refs[input].focus();
+							break;
+						}
+					}
+				} else {
+					const postDto = {
+						title: this.title,
+						content: this.content,
+					};
+					await uploadPost(postDto);
+					alert('등록되었습니다');
+					this.$router.push('/');
+				}
 			} catch (error) {
 				this.logMessage = error.response.data;
 				alert(this.logMessage.message);
@@ -151,7 +183,7 @@ export default {
 	},
 	computed: {
 		editor() {
-			return this.$refs.myQuillEditor.quill;
+			return this.$refs.content.quill;
 		},
 	},
 	components: {
