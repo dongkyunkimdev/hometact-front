@@ -67,11 +67,11 @@
 			<div
 				class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-5 g-3"
 			>
-				<div class="col">
+				<div class="col" v-for="post in postList" :key="post.postId">
 					<div class="card shadow-sm h-100">
 						<div class="card-body">
 							<p class="card-text">
-								매주 주말 독서 모임 구합니다
+								{{ post.title }}
 							</p>
 							<div
 								class="d-flex justify-content-between align-items-center mt-6"
@@ -82,127 +82,22 @@
 										class="img-fluid"
 										alt="hart"
 									/>
-									<small class="text-muted">4</small>
+									<small class="text-muted">
+										{{ post.like }}
+									</small>
 									<img
 										src="@/images/comment.jpg"
 										class="img-fluid ml-05"
 										alt="comment"
 									/>
-									<small class="text-muted">3</small>
+									<small class="text-muted">
+										{{ post.comment }}
+									</small>
 								</div>
-								<small class="text-muted">view 37</small>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card shadow-sm h-100">
-						<div class="card-body">
-							<p class="card-text">
-								매주 주말 독서 모임 구합니다
-							</p>
-							<div
-								class="d-flex justify-content-between align-items-center mt-6"
-							>
-								<div class="btn-group h-1">
-									<img
-										src="@/images/hart.jpg"
-										class="img-fluid"
-										alt="hart"
-									/>
-									<small class="text-muted">4</small>
-									<img
-										src="@/images/comment.jpg"
-										class="img-fluid ml-05"
-										alt="comment"
-									/>
-									<small class="text-muted">3</small>
-								</div>
-								<small class="text-muted">view 37</small>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card shadow-sm h-100">
-						<div class="card-body">
-							<p class="card-text">
-								매주 주말 독서 모임 구합니다
-							</p>
-							<div
-								class="d-flex justify-content-between align-items-center mt-6"
-							>
-								<div class="btn-group h-1">
-									<img
-										src="@/images/hart.jpg"
-										class="img-fluid"
-										alt="hart"
-									/>
-									<small class="text-muted">4</small>
-									<img
-										src="@/images/comment.jpg"
-										class="img-fluid ml-05"
-										alt="comment"
-									/>
-									<small class="text-muted">3</small>
-								</div>
-								<small class="text-muted">view 37</small>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card shadow-sm h-100">
-						<div class="card-body">
-							<p class="card-text">
-								매주 주말 독서 모임 구합니다
-							</p>
-							<div
-								class="d-flex justify-content-between align-items-center mt-6"
-							>
-								<div class="btn-group h-1">
-									<img
-										src="@/images/hart.jpg"
-										class="img-fluid"
-										alt="hart"
-									/>
-									<small class="text-muted">4</small>
-									<img
-										src="@/images/comment.jpg"
-										class="img-fluid ml-05"
-										alt="comment"
-									/>
-									<small class="text-muted">3</small>
-								</div>
-								<small class="text-muted">view 37</small>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card shadow-sm h-100">
-						<div class="card-body">
-							<p class="card-text">
-								매주 주말 독서 모임 구합니다
-							</p>
-							<div
-								class="d-flex justify-content-between align-items-center mt-6"
-							>
-								<div class="btn-group h-1">
-									<img
-										src="@/images/hart.jpg"
-										class="img-fluid"
-										alt="hart"
-									/>
-									<small class="text-muted">4</small>
-									<img
-										src="@/images/comment.jpg"
-										class="img-fluid ml-05"
-										alt="comment"
-									/>
-									<small class="text-muted">3</small>
-								</div>
-								<small class="text-muted">view 37</small>
+								<small class="text-muted"
+									>view
+									{{ post.view }}
+								</small>
 							</div>
 						</div>
 					</div>

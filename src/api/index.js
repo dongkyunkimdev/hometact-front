@@ -16,4 +16,8 @@ function login(loginDto) {
 	return axiosService.post('/user/login', loginDto);
 }
 
-export { getPostList, login };
+function signup(signupDto) {
+	return axiosService.post('/user/signup', signupDto);
+}
+
+export { getPostList, login, signup };

@@ -28,13 +28,39 @@
 							placeholder="Password"
 						/>
 					</div>
-					<button type="button" class="btn mt-3" @click="loginAction">
+					<div
+						class="form-field d-flex align-items-center"
+						v-if="isSignup"
+					>
+						<span class="fas fa-key"></span>
+						<input
+							v-model="nickname"
+							type="nickname"
+							name="nickname"
+							id="nickname"
+							placeholder="Nickname"
+						/>
+					</div>
+					<button
+						type="button"
+						class="btn mt-3"
+						@click="loginAction"
+						v-if="!isSignup"
+					>
 						Login
 					</button>
+					<button
+						type="button"
+						class="btn mt-3"
+						@click="signupAction"
+						v-else
+					>
+						SignUp
+					</button>
 				</form>
-				<div class="text-center fs-6">
+				<div class="text-center fs-6" v-if="!isSignup">
 					<a href="#">Forget password?</a> or
-					<a href="/signup">Sign up</a>
+					<a @click="isSignup = true" href="#">Sign up</a>
 				</div>
 			</div>
 		</div>
@@ -42,15 +68,18 @@
 </template>
 
 <script>
-import { login } from '@/api/index';
+import { login, signup } from '@/api/index';
 
 export default {
 	data: function () {
 		return {
 			email: '',
 			password: '',
+			nickname: '',
 			logMessage: '',
 			tokenDto: '',
+			userDto: '',
+			isSignup: false,
 		};
 	},
 	methods: {
@@ -70,8 +99,28 @@ export default {
 				this.initForm();
 			}
 		},
+		async signupAction() {
+			try {
+				const signupDto = {
+					email: this.email,
+					password: this.password,
+					nickname: this.nickname,
+				};
+				this.userDto = await signup(signupDto);
+				alert(this.userDto.data.nickname + ' 님 환영합니다!');
+				this.closeModal();
+				this.loginAction();
+			} catch (error) {
+				this.logMessage = error.response.data;
+				alert(this.logMessage.message);
+				this.initPassword();
+			}
+		},
 		initForm() {
 			this.email = '';
+			this.password = '';
+		},
+		initPassword() {
 			this.password = '';
 		},
 		setVuex(email, tokenDto) {

@@ -3,29 +3,48 @@
 		<ul
 			class="nav justify-content-end list-inline text-center d-flex justify-content-center align-items-center m-4"
 		>
-			<li class="nav-item me-auto ml-3">
-				<a href="/">
-					<img src="@/images/logo.png" class="img-fluid" alt="logo" />
-				</a>
-			</li>
-			<li class="nav-item">
-				<h5 class="bold m-0">
-					<template v-if="!isLogin">
+			<template v-if="!isLogin">
+				<li class="nav-item me-auto ml-3">
+					<a href="/">
+						<img
+							src="@/images/logo.png"
+							class="img-fluid"
+							alt="logo"
+						/>
+					</a>
+				</li>
+				<li class="nav-item">
+					<h5 class="bold m-0">
 						<a
 							class="nav-link link-secondary"
 							@click="showLoginForm = true"
 						>
 							로그인
 						</a>
-					</template>
-					<template v-else>
-						<span>{{ getEmail }}</span>
+					</h5>
+				</li>
+			</template>
+			<template v-else>
+				<li class="nav-item me-auto ml-3">
+					<a href="/">
+						<img
+							src="@/images/logo.png"
+							class="img-fluid"
+							alt="logo"
+						/>
+					</a>
+				</li>
+				<li class="nav-item">
+					<h5 class="bold m-0 nav-link link-secondary">글 작성</h5>
+				</li>
+				<li class="nav-item">
+					<h5 class="bold m-0">
 						<a class="nav-link link-secondary" @click="logout">
 							로그아웃
 						</a>
-					</template>
-				</h5>
-			</li>
+					</h5>
+				</li>
+			</template>
 		</ul>
 		<LoginForm v-if="showLoginForm" @close-modal="showLoginForm = false">
 		</LoginForm>
