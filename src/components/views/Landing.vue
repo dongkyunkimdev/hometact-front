@@ -251,6 +251,7 @@ export default {
 	data: function () {
 		return {
 			logMessage: '',
+			postList: '',
 		};
 	},
 	mounted() {
@@ -259,11 +260,9 @@ export default {
 	methods: {
 		async searchList() {
 			try {
-				await getPostList();
+				this.postList = await (await getPostList()).data;
 				this.logMessage = '성공';
-				console.log('searchList');
 			} catch (error) {
-				console.log(error.response);
 				this.logMessage = error.response.data;
 			}
 		},

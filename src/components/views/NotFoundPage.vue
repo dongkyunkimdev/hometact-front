@@ -15,10 +15,7 @@
 </template>
 
 <style>
-body {
-	background: #dedede;
-}
 .page-wrap {
-	min-height: 100vh;
+	min-height: 80vh;
 }
 </style>
