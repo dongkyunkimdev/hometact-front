@@ -5,44 +5,52 @@
 		>
 			<template v-if="!isLogin">
 				<li class="nav-item me-auto ml-3">
-					<a href="/">
+					<button @click="homeRoute" class="btn btn-link">
 						<img
 							src="@/images/logo.png"
 							class="img-fluid"
 							alt="logo"
 						/>
-					</a>
+					</button>
 				</li>
 				<li class="nav-item">
-					<h5 class="bold m-0">
-						<a
-							class="nav-link link-secondary"
-							@click="showLoginForm = true"
-						>
-							로그인
-						</a>
-					</h5>
+					<button
+						class="btn btn-link nav-link link-secondary"
+						@click="showLoginForm = true"
+					>
+						<h5 class="bold m-0 nav-link link-secondary">로그인</h5>
+					</button>
 				</li>
 			</template>
 			<template v-else>
 				<li class="nav-item me-auto ml-3">
-					<a href="/">
+					<button @click="homeRoute" class="btn btn-link">
 						<img
 							src="@/images/logo.png"
 							class="img-fluid"
 							alt="logo"
 						/>
-					</a>
+					</button>
 				</li>
 				<li class="nav-item">
-					<h5 class="bold m-0 nav-link link-secondary">글 작성</h5>
+					<button
+						class="btn btn-link nav-link link-secondary"
+						@click="uploadPostRoute"
+					>
+						<h5 class="bold m-0 nav-link link-secondary">
+							글 작성
+						</h5>
+					</button>
 				</li>
 				<li class="nav-item">
-					<h5 class="bold m-0">
-						<a class="nav-link link-secondary" @click="logout">
+					<button
+						class="btn btn-link nav-link link-secondary"
+						@click="logout"
+					>
+						<h5 class="bold m-0 nav-link link-secondary">
 							로그아웃
-						</a>
-					</h5>
+						</h5>
+					</button>
 				</li>
 			</template>
 		</ul>
@@ -64,6 +72,12 @@ export default {
 		logout() {
 			this.$store.commit('logout', '');
 		},
+		uploadPostRoute() {
+			this.$router.push('uploadPost');
+		},
+		homeRoute() {
+			this.$router.push('/');
+		},
 	},
 	computed: {
 		isLogin() {
@@ -78,3 +92,9 @@ export default {
 	},
 };
 </script>
+
+<style>
+.btn:active {
+	box-shadow: none;
+}
+</style>

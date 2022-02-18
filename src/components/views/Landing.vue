@@ -1,7 +1,9 @@
 <template>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-6 jumbotron d-flex align-items-center mt-5">
+			<div
+				class="col-sm-6 jumbotron d-flex align-items-center mt-5 main-intro"
+			>
 				<div>
 					<h1 class="bold">
 						같은 취미를 공유하는,<br />
@@ -15,53 +17,75 @@
 					</h3>
 				</div>
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-6 main-intro">
 				<img src="@/images/main.jpg" class="img-fluid" alt="main" />
 			</div>
 		</div>
+		<div class="category-wrap">
+			<footer class="blockquote-footer">카테고리를 선택해주세요.</footer>
+		</div>
 		<div class="row">
-			<ul class="nav nav-pills nav-justified">
-				<li class="nav-item">
-					<button
-						type="button"
-						class="btn btn-outline-secondary width-90 bold"
+			<div class="row">
+				<div
+					class="btn-group"
+					role="group"
+					aria-label="Basic radio toggle button group"
+				>
+					<input
+						type="radio"
+						class="btn-check"
+						name="btnradio"
+						id="book"
+						autocomplete="off"
+						checked
+					/>
+					<label class="btn btn-outline-secondary bold" for="book"
+						>독서</label
 					>
-						독서
-					</button>
-				</li>
-				<li class="nav-item">
-					<button
-						type="button"
-						class="btn btn-outline-secondary width-90 bold"
+
+					<input
+						type="radio"
+						class="btn-check"
+						name="btnradio"
+						id="movie"
+						autocomplete="off"
+					/>
+					<label class="btn btn-outline-secondary bold" for="movie"
+						>영화</label
 					>
-						영화
-					</button>
-				</li>
-				<li class="nav-item">
-					<button
-						type="button"
-						class="btn btn-outline-secondary width-90 bold"
+
+					<input
+						type="radio"
+						class="btn-check"
+						name="btnradio"
+						id="game"
+						autocomplete="off"
+					/>
+					<label class="btn btn-outline-secondary bold" for="game"
+						>게임</label
 					>
-						게임
-					</button>
-				</li>
-				<li class="nav-item">
-					<button
-						type="button"
-						class="btn btn-outline-secondary width-90 bold"
+					<input
+						type="radio"
+						class="btn-check"
+						name="btnradio"
+						id="craft"
+						autocomplete="off"
+					/>
+					<label class="btn btn-outline-secondary bold" for="craft"
+						>공예</label
 					>
-						공예
-					</button>
-				</li>
-				<li class="nav-item">
-					<button
-						type="button"
-						class="btn btn-outline-secondary width-90 bold"
+					<input
+						type="radio"
+						class="btn-check"
+						name="btnradio"
+						id="etc"
+						autocomplete="off"
+					/>
+					<label class="btn btn-outline-secondary bold" for="etc"
+						>기타</label
 					>
-						기타
-					</button>
-				</li>
-			</ul>
+				</div>
+			</div>
 		</div>
 		<div class="row">
 			<div
@@ -164,3 +188,30 @@ export default {
 	},
 };
 </script>
+
+<style scoped>
+@media (min-width: 992px) {
+	.category-wrap {
+		margin-top: 3rem;
+	}
+}
+
+@media (min-width: 768px) {
+	.category-wrap {
+		margin-top: 5rem;
+	}
+}
+
+@media (min-width: 576px) {
+	.category-wrap {
+		margin-top: 4rem;
+	}
+}
+
+@media (max-width: 1400px) {
+	.main-intro {
+		width: 80%;
+		margin: auto;
+	}
+}
+</style>

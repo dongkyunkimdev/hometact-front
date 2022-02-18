@@ -20,4 +20,8 @@ function signup(signupDto) {
 	return axiosService.post('/user/signup', signupDto);
 }
 
-export { getPostList, login, signup };
+function uploadPost(postDto) {
+	return axiosService.post('/post', postDto);
+}
+
+export { getPostList, login, signup, uploadPost };
