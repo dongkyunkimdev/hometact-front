@@ -95,8 +95,16 @@ export default {
 				this.$router.go('/');
 			} catch (error) {
 				this.logMessage = error.response.data;
-				alert(this.logMessage.message);
-				this.initForm();
+				if (this.logMessage.errors.length === 0) {
+					this.$toast.error(this.logMessage.message);
+				} else {
+					this.$toast.error(
+						this.logMessage.errors[0].field +
+							' ' +
+							this.logMessage.errors[0].reason,
+					);
+				}
+				this.initPassword();
 			}
 		},
 		async signupAction() {
@@ -107,18 +115,21 @@ export default {
 					nickname: this.nickname,
 				};
 				this.userDto = await signup(signupDto);
-				alert(this.userDto.data.nickname + ' 님 환영합니다!');
 				this.closeModal();
 				this.loginAction();
 			} catch (error) {
 				this.logMessage = error.response.data;
-				alert(this.logMessage.message);
+				if (this.logMessage.errors.length === 0) {
+					this.$toast.error(this.logMessage.message);
+				} else {
+					this.$toast.error(
+						this.logMessage.errors[0].field +
+							' ' +
+							this.logMessage.errors[0].reason,
+					);
+				}
 				this.initPassword();
 			}
-		},
-		initForm() {
-			this.email = '';
-			this.password = '';
 		},
 		initPassword() {
 			this.password = '';
