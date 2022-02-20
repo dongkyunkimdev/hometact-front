@@ -158,11 +158,7 @@ export default {
 						const input = Object.keys(this.$v)[key];
 						if (input.includes('$')) return false;
 						if (this.$v[input].$error) {
-							if (input === 'content') {
-								alert('내용을 입력해주세요');
-								break;
-							}
-							this.$refs[input].focus();
+							this.$toast.error(input + ' is required');
 							break;
 						}
 					}

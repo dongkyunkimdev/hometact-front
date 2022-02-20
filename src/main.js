@@ -5,17 +5,24 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import store from '@/store/index';
 import VueQuillEditor from 'vue-quill-editor';
 import Vuelidate from 'vuelidate';
+import Toast from 'vue-toastification';
 
 import 'quill/dist/quill.core.css'; // import styles
 import 'quill/dist/quill.snow.css'; // for snow theme
 import 'quill/dist/quill.bubble.css'; // for bubble theme
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import 'vue-toastification/dist/index.css';
+
+const options = {
+	timeout: 2000,
+};
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueQuillEditor);
 Vue.use(Vuelidate);
+Vue.use(Toast, options);
 
 Vue.config.productionTip = false;
 
