@@ -143,7 +143,7 @@ export default {
 		},
 		content: {
 			required,
-			maxLength: maxLength(500),
+			maxLength: maxLength(5000),
 		},
 	},
 	methods: {
@@ -157,8 +157,19 @@ export default {
 					for (let key in Object.keys(this.$v)) {
 						const input = Object.keys(this.$v)[key];
 						if (input.includes('$')) return false;
-						if (this.$v[input].$error) {
+						if (!this.$v[input].required) {
 							this.$toast.error(input + ' is required');
+							break;
+						} else if (!this.$v[input].maxLength) {
+							if (input === 'title') {
+								this.$toast.error(
+									'제목의 길이가 500 이하여야 합니다',
+								);
+							} else if (input === 'content') {
+								this.$toast.error(
+									'내용의 길이가 5000 이하여야 합니다',
+								);
+							}
 							break;
 						}
 					}
