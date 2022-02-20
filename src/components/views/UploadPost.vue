@@ -250,9 +250,3 @@ input.title {
 	margin-top: 3.5rem;
 }
 </style>
-
-<style>
-.ql-editor.ql-blank::before {
-	font-size: 1.2rem !important;
-}
-</style>

@@ -25,3 +25,15 @@
 .mr-1{
     margin-right: 1rem;
 }
+
+.ql-editor.ql-blank::before {
+	font-size: 1.2rem !important;
+}
+
+.ql-editor {
+	font-size: 1.1rem;
+}
+
+.ql-container.ql-snow.ql-disabled {
+	border: none !important;
+}

@@ -24,4 +24,8 @@ function uploadPost(postDto) {
 	return axiosService.post('/post', postDto);
 }
 
-export { getPostList, login, signup, uploadPost };
+function getPost(postId) {
+	return axiosService.get('/post/' + postId);
+}
+
+export { getPostList, login, signup, uploadPost, getPost };

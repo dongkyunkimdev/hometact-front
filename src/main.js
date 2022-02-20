@@ -14,7 +14,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'vue-toastification/dist/index.css';
 
-const options = {
+const toastOptions = {
 	timeout: 2000,
 };
 
@@ -22,7 +22,7 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueQuillEditor);
 Vue.use(Vuelidate);
-Vue.use(Toast, options);
+Vue.use(Toast, toastOptions);
 
 Vue.config.productionTip = false;
 

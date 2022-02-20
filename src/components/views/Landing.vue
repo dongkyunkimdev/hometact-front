@@ -91,8 +91,15 @@
 			<div
 				class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-5 g-3"
 			>
-				<div class="col" v-for="post in postList" :key="post.postId">
-					<div class="card shadow-sm h-100">
+				<div
+					class="col post-list"
+					v-for="post in postList"
+					:key="post.postId"
+				>
+					<div
+						class="card shadow-sm h-100"
+						@click="viewPost(post.postId)"
+					>
 						<div class="card-body">
 							<p class="card-text">
 								{{ post.title }}
@@ -102,12 +109,12 @@
 							>
 								<div class="btn-group h-1">
 									<img
-										src="@/images/hart.jpg"
+										src="@/images/hart.png"
 										class="img-fluid"
 										alt="hart"
 									/>
 									<small class="text-muted">
-										{{ post.like }}
+										{{ post.postLikeDtos.length }}
 									</small>
 									<img
 										src="@/images/comment.jpg"
@@ -115,41 +122,13 @@
 										alt="comment"
 									/>
 									<small class="text-muted">
-										{{ post.comment }}
+										{{ post.commentDtos.length }}
 									</small>
 								</div>
 								<small class="text-muted"
 									>view
 									{{ post.view }}
 								</small>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card shadow-sm h-100">
-						<div class="card-body">
-							<p class="card-text">
-								매주 주말 독서 모임 구합니다
-							</p>
-							<div
-								class="d-flex justify-content-between align-items-center mt-6"
-							>
-								<div class="btn-group h-1">
-									<img
-										src="@/images/hart.jpg"
-										class="img-fluid"
-										alt="hart"
-									/>
-									<small class="text-muted">4</small>
-									<img
-										src="@/images/comment.jpg"
-										class="img-fluid ml-05"
-										alt="comment"
-									/>
-									<small class="text-muted">3</small>
-								</div>
-								<small class="text-muted">view 37</small>
 							</div>
 						</div>
 					</div>
@@ -180,10 +159,17 @@ export default {
 		async searchList() {
 			try {
 				this.postList = await (await getPostList()).data;
-				this.logMessage = '성공';
 			} catch (error) {
 				this.logMessage = error.response.data;
 			}
+		},
+		viewPost(postId) {
+			this.$router.push({
+				name: '/viewPost',
+				params: {
+					postId: postId,
+				},
+			});
 		},
 	},
 };
@@ -213,5 +199,19 @@ export default {
 		width: 80%;
 		margin: auto;
 	}
+}
+
+.post-list {
+	height: 13rem;
+}
+
+.card-text {
+	text-align: center;
+	height: 3rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
 </style>
