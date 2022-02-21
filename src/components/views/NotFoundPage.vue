@@ -7,12 +7,24 @@
 					<div class="mb-4 lead">
 						The page you are looking for was not found.
 					</div>
-					<a href="/" class="btn btn-link">Back to Home</a>
+					<button @click="toHome" class="btn btn-link">
+						Back to Home
+					</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
+
+<script>
+export default {
+	methods: {
+		toHome() {
+			this.$router.push('/');
+		},
+	},
+};
+</script>
 
 <style>
 .page-wrap {

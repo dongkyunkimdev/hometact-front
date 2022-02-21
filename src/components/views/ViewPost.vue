@@ -158,6 +158,10 @@ export default {
 			}
 		},
 		async uploadCommentAction() {
+			if (this.getEmail === '') {
+				this.$toast.error('로그인이 필요한 기능입니다');
+				return;
+			}
 			if (!this.$v['comment'].required) {
 				this.$toast.error('comment is required');
 				return;
@@ -248,6 +252,10 @@ export default {
 			this.$toast.success('댓글이 삭제되었습니다');
 		},
 		async likePostAction(postId) {
+			if (this.getEmail === '') {
+				this.$toast.error('로그인이 필요한 기능입니다');
+				return;
+			}
 			try {
 				await likePost(postId);
 				this.init();
