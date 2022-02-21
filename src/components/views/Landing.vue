@@ -155,14 +155,17 @@
 import { getPostList } from '@/api/index';
 
 export default {
+	name: '',
 	data: function () {
 		return {
 			logMessage: '',
 			postList: '',
+			eventName: this.$route.params.eventName,
 		};
 	},
 	mounted() {
 		this.searchList();
+		this.eventToast();
 	},
 	methods: {
 		async searchList() {
@@ -179,6 +182,31 @@ export default {
 					postId: postId,
 				},
 			});
+		},
+		eventToast() {
+			if (this.eventName !== undefined) {
+				switch (this.eventName) {
+					case 'uploadPost':
+						this.$toast.success('글이 등록되었습니다');
+						break;
+
+					case 'updatePost':
+						this.$toast.success('글이 수정되었습니다');
+						break;
+
+					case 'deletePost':
+						this.$toast.success('글이 삭제되었습니다');
+						break;
+
+					default:
+						break;
+				}
+			}
+		},
+	},
+	computed: {
+		getEmail() {
+			return this.$store.getters.getEmail;
 		},
 	},
 };

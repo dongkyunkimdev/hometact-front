@@ -181,7 +181,10 @@ export default {
 		async deletePostAction(postId) {
 			try {
 				await deletePost(postId);
-				this.$router.push('/');
+				this.$router.push({
+					name: '/',
+					params: { eventName: 'deletePost' },
+				});
 			} catch (error) {
 				this.logMessage = error.response.data;
 				alert(this.logMessage.message);

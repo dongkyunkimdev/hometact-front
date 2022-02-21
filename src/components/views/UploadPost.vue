@@ -201,8 +201,10 @@ export default {
 						content: this.content,
 					};
 					await uploadPost(postDto);
-					alert('등록되었습니다');
-					this.$router.push('/');
+					this.$router.push({
+						name: '/',
+						params: { eventName: 'uploadPost' },
+					});
 				}
 			} catch (error) {
 				this.logMessage = error.response.data;
@@ -238,8 +240,10 @@ export default {
 						content: this.content,
 					};
 					await updatePost(this.postId, postDto);
-					alert('수정되었습니다');
-					this.$router.push('/');
+					this.$router.push({
+						name: '/',
+						params: { eventName: 'updatePost' },
+					});
 				}
 			} catch (error) {
 				this.logMessage = error.response.data;

@@ -8,6 +8,7 @@ const router = new VueRouter({
 	routes: [
 		{
 			path: '/',
+			name: '/',
 			component: () => import('@/components/views/Landing'),
 		},
 		{
