@@ -14,20 +14,21 @@
 		</div>
 		<div class="row post-info">
 			<div class="post-info-item" v-if="postObj.postLikeDtos">
-				<img src="@/images/hart.png" class="img-fluid" alt="hart" />
-				{{ postObj.postLikeDtos.length }}
-			</div>
-			<div class="post-info-item ml-1" v-if="postObj.commentDtos">
 				<img
-					src="@/images/comment.png"
-					class="img-fluid ml-05"
-					alt="comment"
+					v-if="checkPostLike"
+					src="@/images/hart.png"
+					class="img-fluid"
+					alt="hart"
+					@click="cancelLikePostAction(postObj.postId)"
 				/>
-				{{ postObj.commentDtos.length }}
-			</div>
-			<div class="post-info-item ml-2">
-				<img src="@/images/view.jpg" class="img-fluid" alt="view" />
-				{{ postObj.view }}
+				<img
+					v-else
+					src="@/images/disable_hart.png"
+					class="img-fluid"
+					alt="hart"
+					@click="likePostAction(postObj.postId)"
+				/>
+				{{ postObj.postLikeDtos.length }}
 			</div>
 		</div>
 		<div
@@ -111,7 +112,14 @@
 </template>
 
 <script>
-import { getPost, uploadComment, deleteComment, deletePost } from '@/api/index';
+import {
+	getPost,
+	uploadComment,
+	deleteComment,
+	deletePost,
+	likePost,
+	cancelLikePost,
+} from '@/api/index';
 import { quillEditor } from 'vue-quill-editor';
 import { required, maxLength } from 'vuelidate/lib/validators';
 
@@ -236,10 +244,36 @@ export default {
 		toastDeleteComment() {
 			this.$toast.success('댓글이 삭제되었습니다');
 		},
+		async likePostAction(postId) {
+			try {
+				await likePost(postId);
+				this.init();
+			} catch (error) {
+				this.logMessage = error.response.data;
+				this.$toast.error(this.logMessage.message);
+			}
+		},
+		async cancelLikePostAction(postId) {
+			try {
+				await cancelLikePost(postId);
+				this.init();
+			} catch (error) {
+				this.logMessage = error.response.data;
+				this.$toast.error(this.logMessage.message);
+			}
+		},
 	},
 	computed: {
 		getEmail() {
 			return this.$store.getters.getEmail;
+		},
+		checkPostLike() {
+			for (const element of this.postObj.postLikeDtos) {
+				if (element.userDto.email === this.getEmail) {
+					return true;
+				}
+			}
+			return false;
 		},
 	},
 	components: {
@@ -349,7 +383,6 @@ div.post-info {
 	justify-content: flex-end;
 	align-items: center;
 	margin-top: 1rem;
-	margin-right: 2.7rem;
 }
 
 div.post-info-item {
@@ -359,12 +392,14 @@ div.post-info-item {
 	height: 1rem;
 	font-size: 1.2rem;
 	color: #6c757d;
+	justify-content: flex-end;
 }
 
 div.post-info-item > img {
-	width: 1.3rem;
+	width: 1.7rem;
 	max-width: none;
 	margin-right: 0.2rem;
+	cursor: pointer;
 }
 
 div.row.comment {

@@ -36,6 +36,14 @@ function updatePost(postId, postDto) {
 	return axiosService.patch('/post/' + postId, postDto);
 }
 
+function likePost(postId) {
+	return axiosService.post('/postlike/' + postId);
+}
+
+function cancelLikePost(postId) {
+	return axiosService.delete('/postlike/' + postId);
+}
+
 function uploadComment(commentDto) {
 	return axiosService.post('/comment', commentDto);
 }
@@ -52,6 +60,8 @@ export {
 	getPost,
 	deletePost,
 	updatePost,
+	likePost,
+	cancelLikePost,
 	uploadComment,
 	deleteComment,
 };

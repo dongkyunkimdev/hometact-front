@@ -113,7 +113,7 @@
 										class="img-fluid"
 										alt="hart"
 									/>
-									<small class="text-muted">
+									<small class="text-muted mr-02">
 										{{ post.postLikeDtos.length }}
 									</small>
 									<img
