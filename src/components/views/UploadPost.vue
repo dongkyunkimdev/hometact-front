@@ -78,6 +78,7 @@
 		<div class="row quill-editor-wrap">
 			<quill-editor
 				class="content"
+				style="min-height: 28rem"
 				name="content"
 				id="content"
 				ref="content"
@@ -243,7 +244,10 @@ input.title {
 
 .quill-editor-wrap {
 	margin-top: 2rem;
-	height: 28rem;
+}
+
+.ql-container {
+	min-height: inherit;
 }
 
 .btn-toolbar {

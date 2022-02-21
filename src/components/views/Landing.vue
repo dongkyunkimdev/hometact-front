@@ -105,7 +105,7 @@
 								{{ post.title }}
 							</p>
 							<div
-								class="d-flex justify-content-between align-items-center mt-6"
+								class="d-flex justify-content-between align-items-center info-wrap"
 							>
 								<div class="btn-group h-1">
 									<img
@@ -117,18 +117,26 @@
 										{{ post.postLikeDtos.length }}
 									</small>
 									<img
-										src="@/images/comment.jpg"
+										src="@/images/comment.png"
 										class="img-fluid ml-05"
 										alt="comment"
 									/>
 									<small class="text-muted">
 										{{ post.commentDtos.length }}
 									</small>
+									<img
+										src="@/images/view.jpg"
+										class="img-fluid ml-05"
+										alt="comment"
+									/>
+									<small class="text-muted">
+										{{ post.view }}
+									</small>
 								</div>
-								<small class="text-muted"
+								<!-- <small class="text-muted"
 									>view
 									{{ post.view }}
-								</small>
+								</small> -->
 							</div>
 						</div>
 					</div>
@@ -139,6 +147,7 @@
 		<!-- Heart doodle vector created by rawpixel.com - www.freepik.com -->
 		<!-- Design vector created by freepik - www.freepik.com -->
 		<!-- Eye examination vector created by pch.vector - www.freepik.com -->
+		<!-- Heart vector created by alicia_mb - www.freepik.com -->
 	</div>
 </template>
 
@@ -213,5 +222,22 @@ export default {
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
+}
+
+.btn-group {
+	align-items: center;
+}
+
+.btn-group > img {
+	width: 1rem;
+	margin-right: 0.2rem;
+}
+
+.btn-group > samll {
+	margin-right: 0.2rem;
+}
+
+div.info-wrap {
+	margin-top: 6.5rem;
 }
 </style>
