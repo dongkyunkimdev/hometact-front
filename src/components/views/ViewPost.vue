@@ -119,7 +119,7 @@ export default {
 	name: 'viewPost',
 	data: function () {
 		return {
-			postId: this.$route.params.postId,
+			postId: this.$route.query.postId,
 			postObj: '',
 			comment: '',
 			logMessage: '',

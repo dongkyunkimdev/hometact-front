@@ -178,7 +178,7 @@ export default {
 		viewPost(postId) {
 			this.$router.push({
 				name: '/viewPost',
-				params: {
+				query: {
 					postId: postId,
 				},
 			});
