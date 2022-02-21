@@ -4,6 +4,7 @@
 		<div id="content">
 			<router-view></router-view>
 		</div>
+		<vue-confirm-dialog></vue-confirm-dialog>
 	</div>
 </template>
 

@@ -35,7 +35,7 @@
 			v-if="postObj.userDto && postObj.userDto.email === getEmail"
 		>
 			<button @click.once="updatePostAction(postObj)">수정</button>
-			<button @click.once="deletePostAction(postObj.postId)">삭제</button>
+			<button @click="deletePostAction(postObj.postId)">삭제</button>
 		</div>
 		<div class="row category">
 			<div class="category-item">독서</div>
@@ -71,7 +71,7 @@
 							<template v-if="comment.userDto.email === getEmail">
 								<button>수정</button
 								><button
-									@click.once="
+									@click="
 										deleteCommentAction(comment.commentId)
 									"
 								>
@@ -167,30 +167,52 @@ export default {
 				this.toastUploadComment();
 			} catch (error) {
 				this.logMessage = error.response.data;
-				alert(this.logMessage.message);
+				this.$toast.error(this.logMessage.message);
 			}
 		},
-		async deleteCommentAction(commentId) {
-			try {
-				await deleteComment(commentId);
-				this.init();
-				this.toastDeleteComment();
-			} catch (error) {
-				this.logMessage = error.response.data;
-				alert(this.logMessage.message);
-			}
+		deleteCommentAction(commentId) {
+			this.$confirm({
+				message: `삭제하시겠습니까?`,
+				button: {
+					no: '아니오',
+					yes: '예',
+				},
+				callback: async confirm => {
+					if (confirm) {
+						try {
+							await deleteComment(commentId);
+							this.init();
+							this.toastDeleteComment();
+						} catch (error) {
+							this.logMessage = error.response.data;
+							this.$toast.error(this.logMessage.message);
+						}
+					}
+				},
+			});
 		},
-		async deletePostAction(postId) {
-			try {
-				await deletePost(postId);
-				this.$router.push({
-					name: '/',
-					params: { eventName: 'deletePost' },
-				});
-			} catch (error) {
-				this.logMessage = error.response.data;
-				alert(this.logMessage.message);
-			}
+		deletePostAction(postId) {
+			this.$confirm({
+				message: `삭제하시겠습니까?`,
+				button: {
+					no: '아니오',
+					yes: '예',
+				},
+				callback: async confirm => {
+					if (confirm) {
+						try {
+							await deletePost(postId);
+							this.$router.push({
+								name: '/',
+								params: { eventName: 'deletePost' },
+							});
+						} catch (error) {
+							this.logMessage = error.response.data;
+							this.$toast.error(this.logMessage.message);
+						}
+					}
+				},
+			});
 		},
 		updatePostAction(postObj) {
 			this.$router.push({

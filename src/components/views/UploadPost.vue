@@ -208,7 +208,7 @@ export default {
 				}
 			} catch (error) {
 				this.logMessage = error.response.data;
-				alert(this.logMessage.message);
+				this.$toast.error(this.logMessage.message);
 			}
 		},
 		async updateAction() {
@@ -247,7 +247,7 @@ export default {
 				}
 			} catch (error) {
 				this.logMessage = error.response.data;
-				alert(this.logMessage.message);
+				this.$toast.error(this.logMessage.message);
 			}
 		},
 	},

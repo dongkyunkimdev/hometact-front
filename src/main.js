@@ -6,6 +6,7 @@ import store from '@/store/index';
 import VueQuillEditor from 'vue-quill-editor';
 import Vuelidate from 'vuelidate';
 import Toast from 'vue-toastification';
+import VueConfigDialog from 'vue-confirm-dialog';
 
 import 'quill/dist/quill.core.css'; // import styles
 import 'quill/dist/quill.snow.css'; // for snow theme
@@ -23,6 +24,7 @@ Vue.use(IconsPlugin);
 Vue.use(VueQuillEditor);
 Vue.use(Vuelidate);
 Vue.use(Toast, toastOptions);
+Vue.use(VueConfigDialog);
 
 Vue.config.productionTip = false;
 
