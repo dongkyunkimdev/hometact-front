@@ -16,6 +16,7 @@
 							name="email"
 							id="email"
 							placeholder="Email"
+							autocomplete="off"
 						/>
 					</div>
 					<div class="form-field d-flex align-items-center">
