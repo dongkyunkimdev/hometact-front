@@ -32,58 +32,41 @@
 					aria-label="Basic radio toggle button group"
 				>
 					<input
+						@click="initPost"
+						v-model="postCategoryId"
 						type="radio"
 						class="btn-check"
 						name="btnradio"
-						id="book"
+						id="999"
+						value="999"
 						autocomplete="off"
-						checked
+						key="i-999"
 					/>
-					<label class="btn btn-outline-secondary bold" for="book"
-						>독서</label
+					<label
+						class="btn btn-outline-secondary bold"
+						for="999"
+						key="l-999"
+						>전체</label
 					>
-
-					<input
-						type="radio"
-						class="btn-check"
-						name="btnradio"
-						id="movie"
-						autocomplete="off"
-					/>
-					<label class="btn btn-outline-secondary bold" for="movie"
-						>영화</label
-					>
-
-					<input
-						type="radio"
-						class="btn-check"
-						name="btnradio"
-						id="game"
-						autocomplete="off"
-					/>
-					<label class="btn btn-outline-secondary bold" for="game"
-						>게임</label
-					>
-					<input
-						type="radio"
-						class="btn-check"
-						name="btnradio"
-						id="craft"
-						autocomplete="off"
-					/>
-					<label class="btn btn-outline-secondary bold" for="craft"
-						>공예</label
-					>
-					<input
-						type="radio"
-						class="btn-check"
-						name="btnradio"
-						id="etc"
-						autocomplete="off"
-					/>
-					<label class="btn btn-outline-secondary bold" for="etc"
-						>기타</label
-					>
+					<template v-for="postCategory in postCategoryList">
+						<input
+							@change="searchPostByCategory"
+							v-model="postCategoryId"
+							type="radio"
+							class="btn-check"
+							name="btnradio"
+							:id="postCategory.postCategoryId"
+							:value="postCategory.postCategoryId"
+							autocomplete="off"
+							:key="'i-' + postCategory.postCategoryId"
+						/>
+						<label
+							class="btn btn-outline-secondary bold"
+							:for="postCategory.postCategoryId"
+							:key="'l-' + postCategory.postCategoryId"
+							>{{ postCategory.categoryName }}</label
+						>
+					</template>
 				</div>
 			</div>
 		</div>
@@ -133,10 +116,6 @@
 										{{ post.view }}
 									</small>
 								</div>
-								<!-- <small class="text-muted"
-									>view
-									{{ post.view }}
-								</small> -->
 							</div>
 						</div>
 					</div>
@@ -152,7 +131,11 @@
 </template>
 
 <script>
-import { getPostList } from '@/api/index';
+import {
+	getPostList,
+	getPostCategoryList,
+	getPostListByCategory,
+} from '@/api/index';
 
 export default {
 	name: '',
@@ -160,17 +143,40 @@ export default {
 		return {
 			logMessage: '',
 			postList: '',
+			postCategoryList: '',
+			postCategoryId: '999',
 			eventName: this.$route.params.eventName,
 		};
 	},
 	mounted() {
-		this.searchList();
+		this.initPost();
+		this.initPostCategory();
 		this.eventToast();
 	},
 	methods: {
-		async searchList() {
+		async initPost() {
 			try {
 				this.postList = await (await getPostList()).data;
+			} catch (error) {
+				this.logMessage = error.response.data;
+				this.$toast.error(error.response.data);
+			}
+		},
+		async searchPostByCategory() {
+			try {
+				this.postList = await (
+					await getPostListByCategory(this.postCategoryId)
+				).data;
+			} catch (error) {
+				this.logMessage = error.response.data;
+				this.$toast.error(error.response.data);
+			}
+		},
+		async initPostCategory() {
+			try {
+				this.postCategoryList = await (
+					await getPostCategoryList()
+				).data;
 			} catch (error) {
 				this.logMessage = error.response.data;
 			}

@@ -39,7 +39,9 @@
 			<button @click="deletePostAction(postObj.postId)">삭제</button>
 		</div>
 		<div class="row category">
-			<div class="category-item">독서</div>
+			<div class="category-item" v-if="postObj.postCategoryDto">
+				{{ postObj.postCategoryDto.categoryName }}
+			</div>
 		</div>
 		<div class="row content quill-editor-wrap">
 			<quill-editor
@@ -229,6 +231,7 @@ export default {
 					postId: postObj.postId,
 					title: postObj.title,
 					content: postObj.content,
+					postCategoryId: postObj.postCategoryDto.postCategoryId,
 				},
 			});
 		},

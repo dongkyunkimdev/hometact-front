@@ -12,6 +12,14 @@ function getPostList() {
 	return axiosService.get('/post');
 }
 
+function getPostListByCategory(postCategoryId) {
+	return axiosService.get('/post/category/' + postCategoryId);
+}
+
+function getPostCategoryList() {
+	return axiosService.get('/postcategory');
+}
+
 function login(loginDto) {
 	return axiosService.post('/user/login', loginDto);
 }
@@ -54,6 +62,7 @@ function deleteComment(commentId) {
 
 export {
 	getPostList,
+	getPostCategoryList,
 	login,
 	signup,
 	uploadPost,
@@ -64,4 +73,5 @@ export {
 	cancelLikePost,
 	uploadComment,
 	deleteComment,
+	getPostListByCategory,
 };

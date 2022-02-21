@@ -20,59 +20,24 @@
 				role="group"
 				aria-label="Basic radio toggle button group"
 			>
-				<input
-					type="radio"
-					class="btn-check"
-					name="btnradio"
-					id="book"
-					autocomplete="off"
-					checked
-				/>
-				<label class="btn btn-outline-secondary bold" for="book"
-					>독서</label
-				>
-
-				<input
-					type="radio"
-					class="btn-check"
-					name="btnradio"
-					id="movie"
-					autocomplete="off"
-				/>
-				<label class="btn btn-outline-secondary bold" for="movie"
-					>영화</label
-				>
-
-				<input
-					type="radio"
-					class="btn-check"
-					name="btnradio"
-					id="game"
-					autocomplete="off"
-				/>
-				<label class="btn btn-outline-secondary bold" for="game"
-					>게임</label
-				>
-				<input
-					type="radio"
-					class="btn-check"
-					name="btnradio"
-					id="craft"
-					autocomplete="off"
-				/>
-				<label class="btn btn-outline-secondary bold" for="craft"
-					>공예</label
-				>
-				<input
-					type="radio"
-					class="btn-check"
-					name="btnradio"
-					id="etc"
-					autocomplete="off"
-				/>
-				<label class="btn btn-outline-secondary bold" for="etc"
-					>기타</label
-				>
+				<template v-for="postCategory in postCategoryList">
+					<input
+						v-model="postCategoryId"
+						type="radio"
+						class="btn-check"
+						name="btnradio"
+						:id="postCategory.postCategoryId"
+						:value="postCategory.postCategoryId"
+						autocomplete="off"
+						:key="'i-' + postCategory.postCategoryId"
+					/>
+					<label
+						class="btn btn-outline-secondary bold"
+						:for="postCategory.postCategoryId"
+						:key="'l' + postCategory.postCategoryId"
+						>{{ postCategory.categoryName }}</label
+					>
+				</template>
 			</div>
 		</div>
 		<div class="row quill-editor-wrap">
@@ -121,7 +86,7 @@
 
 <script>
 import { quillEditor } from 'vue-quill-editor';
-import { uploadPost, updatePost } from '@/api/index';
+import { uploadPost, updatePost, getPostCategoryList } from '@/api/index';
 import { required, maxLength } from 'vuelidate/lib/validators';
 
 export default {
@@ -131,6 +96,8 @@ export default {
 			postId: '',
 			title: '',
 			content: '',
+			postCategoryId: '',
+			postCategoryList: '',
 			logMessage: '',
 			editorOption: {
 				modules: {
@@ -157,16 +124,30 @@ export default {
 			required,
 			maxLength: maxLength(5000),
 		},
+		postCategoryId: {
+			required,
+		},
 	},
 	mounted() {
 		this.updateCheck();
+		this.initPostCategory();
 	},
 	methods: {
+		async initPostCategory() {
+			try {
+				this.postCategoryList = await (
+					await getPostCategoryList()
+				).data;
+			} catch (error) {
+				this.logMessage = error.response.data;
+			}
+		},
 		updateCheck() {
 			if (this.$route.params) {
 				this.postId = this.$route.params.postId;
 				this.title = this.$route.params.title;
 				this.content = this.$route.params.content;
+				this.postCategoryId = this.$route.params.postCategoryId;
 			}
 		},
 		cancelBtn() {
@@ -180,7 +161,13 @@ export default {
 						const input = Object.keys(this.$v)[key];
 						if (input.includes('$')) return false;
 						if (!this.$v[input].required) {
-							this.$toast.error(input + ' is required');
+							if (input === 'title') {
+								this.$toast.error('제목을 입력해주세요');
+							} else if (input === 'content') {
+								this.$toast.error('내용을 입력해주세요');
+							} else if (input === 'postCategoryId') {
+								this.$toast.error('카테고리를 선택해주세요');
+							}
 							break;
 						} else if (!this.$v[input].maxLength) {
 							if (input === 'title') {
@@ -199,6 +186,7 @@ export default {
 					const postDto = {
 						title: this.title,
 						content: this.content,
+						postCategoryId: this.postCategoryId,
 					};
 					await uploadPost(postDto);
 					this.$router.push({
@@ -238,6 +226,7 @@ export default {
 					const postDto = {
 						title: this.title,
 						content: this.content,
+						postCategoryId: this.postCategoryId,
 					};
 					await updatePost(this.postId, postDto);
 					this.$router.push({
