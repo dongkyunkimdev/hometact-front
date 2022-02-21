@@ -164,6 +164,7 @@ export default {
 				await uploadComment(commentDto);
 				this.clearComment();
 				this.init();
+				this.toastUploadComment();
 			} catch (error) {
 				this.logMessage = error.response.data;
 				alert(this.logMessage.message);
@@ -173,6 +174,7 @@ export default {
 			try {
 				await deleteComment(commentId);
 				this.init();
+				this.toastDeleteComment();
 			} catch (error) {
 				this.logMessage = error.response.data;
 				alert(this.logMessage.message);
@@ -202,6 +204,15 @@ export default {
 		},
 		clearComment() {
 			this.comment = '';
+		},
+		toastUploadComment() {
+			this.$toast.success('댓글이 등록되었습니다');
+		},
+		toastUpdateComment() {
+			this.$toast.success('댓글이 수정되었습니다');
+		},
+		toastDeleteComment() {
+			this.$toast.success('댓글이 삭제되었습니다');
 		},
 	},
 	computed: {
