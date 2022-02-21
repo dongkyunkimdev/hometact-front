@@ -28,6 +28,14 @@ function getPost(postId) {
 	return axiosService.get('/post/' + postId);
 }
 
+function deletePost(postId) {
+	return axiosService.delete('/post/' + postId);
+}
+
+function updatePost(postId, postDto) {
+	return axiosService.patch('/post/' + postId, postDto);
+}
+
 function uploadComment(commentDto) {
 	return axiosService.post('/comment', commentDto);
 }
@@ -42,6 +50,8 @@ export {
 	signup,
 	uploadPost,
 	getPost,
+	deletePost,
+	updatePost,
 	uploadComment,
 	deleteComment,
 };

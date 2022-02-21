@@ -20,6 +20,7 @@ const router = new VueRouter({
 		},
 		{
 			path: '/uploadPost',
+			name: '/uploadPost',
 			component: () => import('@/components/views/UploadPost'),
 		},
 		{

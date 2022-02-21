@@ -98,9 +98,18 @@
 			<button
 				type="button"
 				class="btn btn-outline-primary"
-				@click.once="uploadAction"
+				@click="uploadAction"
+				v-if="this.postId === undefined"
 			>
 				등록
+			</button>
+			<button
+				type="button"
+				class="btn btn-outline-primary"
+				@click="updateAction"
+				v-else
+			>
+				수정
 			</button>
 		</div>
 		<!-- People vector created by pikisuperstar - www.freepik.com -->
@@ -112,12 +121,14 @@
 
 <script>
 import { quillEditor } from 'vue-quill-editor';
-import { uploadPost } from '@/api/index';
+import { uploadPost, updatePost } from '@/api/index';
 import { required, maxLength } from 'vuelidate/lib/validators';
 
 export default {
+	name: 'uploadPost',
 	data: function () {
 		return {
+			postId: '',
 			title: '',
 			content: '',
 			logMessage: '',
@@ -147,7 +158,17 @@ export default {
 			maxLength: maxLength(5000),
 		},
 	},
+	mounted() {
+		this.updateCheck();
+	},
 	methods: {
+		updateCheck() {
+			if (this.$route.params) {
+				this.postId = this.$route.params.postId;
+				this.title = this.$route.params.title;
+				this.content = this.$route.params.content;
+			}
+		},
 		cancelBtn() {
 			this.$router.push('/');
 		},
@@ -181,6 +202,43 @@ export default {
 					};
 					await uploadPost(postDto);
 					alert('등록되었습니다');
+					this.$router.push('/');
+				}
+			} catch (error) {
+				this.logMessage = error.response.data;
+				alert(this.logMessage.message);
+			}
+		},
+		async updateAction() {
+			try {
+				this.$v.$touch();
+				if (this.$v.$invalid) {
+					for (let key in Object.keys(this.$v)) {
+						const input = Object.keys(this.$v)[key];
+						if (input.includes('$')) return false;
+						if (!this.$v[input].required) {
+							this.$toast.error(input + ' is required');
+							break;
+						} else if (!this.$v[input].maxLength) {
+							if (input === 'title') {
+								this.$toast.error(
+									'제목의 길이는 500 이하여야 합니다',
+								);
+							} else if (input === 'content') {
+								this.$toast.error(
+									'내용의 길이는 5000 이하여야 합니다',
+								);
+							}
+							break;
+						}
+					}
+				} else {
+					const postDto = {
+						title: this.title,
+						content: this.content,
+					};
+					await updatePost(this.postId, postDto);
+					alert('수정되었습니다');
 					this.$router.push('/');
 				}
 			} catch (error) {

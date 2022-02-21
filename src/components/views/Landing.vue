@@ -87,7 +87,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row post-list-wrapper">
 			<div
 				class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-5 g-3"
 			>
@@ -239,5 +239,9 @@ export default {
 
 div.info-wrap {
 	margin-top: 6.5rem;
+}
+
+.post-list-wrapper {
+	margin-bottom: 10rem;
 }
 </style>

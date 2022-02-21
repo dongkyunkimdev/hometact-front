@@ -30,6 +30,13 @@
 				{{ postObj.view }}
 			</div>
 		</div>
+		<div
+			class="row post-manage-wrap justify-content-end"
+			v-if="postObj.userDto && postObj.userDto.email === getEmail"
+		>
+			<button @click.once="updatePostAction(postObj)">수정</button>
+			<button @click.once="deletePostAction(postObj.postId)">삭제</button>
+		</div>
 		<div class="row category">
 			<div class="category-item">독서</div>
 		</div>
@@ -104,7 +111,7 @@
 </template>
 
 <script>
-import { getPost, uploadComment, deleteComment } from '@/api/index';
+import { getPost, uploadComment, deleteComment, deletePost } from '@/api/index';
 import { quillEditor } from 'vue-quill-editor';
 import { required, maxLength } from 'vuelidate/lib/validators';
 
@@ -170,6 +177,25 @@ export default {
 				this.logMessage = error.response.data;
 				alert(this.logMessage.message);
 			}
+		},
+		async deletePostAction(postId) {
+			try {
+				await deletePost(postId);
+				this.$router.push('/');
+			} catch (error) {
+				this.logMessage = error.response.data;
+				alert(this.logMessage.message);
+			}
+		},
+		updatePostAction(postObj) {
+			this.$router.push({
+				name: '/uploadPost',
+				params: {
+					postId: postObj.postId,
+					title: postObj.title,
+					content: postObj.content,
+				},
+			});
 		},
 		clearComment() {
 			this.comment = '';
@@ -358,7 +384,7 @@ div.comment-wrapper {
 
 .write-comment-btn {
 	width: 6rem;
-	margin-bottom: 40px;
+	margin-bottom: 3rem;
 }
 
 .comment-manage-wrap {
@@ -379,5 +405,18 @@ div.comment-wrapper {
 
 .comment-content {
 	line-break: anywhere;
+}
+
+.post-manage-wrap {
+	display: flex;
+	margin-top: 1rem;
+}
+
+.post-manage-wrap > button {
+	width: auto;
+	outline: none;
+	border: none;
+	background-color: #fff;
+	cursor: pointer;
 }
 </style>
