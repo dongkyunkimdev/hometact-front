@@ -91,14 +91,14 @@
 			<button
 				type="button"
 				class="btn btn-outline-secondary mr-1"
-				@click="cancelBtn"
+				@click.once="cancelBtn"
 			>
 				취소
 			</button>
 			<button
 				type="button"
 				class="btn btn-outline-primary"
-				@click="uploadAction"
+				@click.once="uploadAction"
 			>
 				등록
 			</button>
@@ -164,11 +164,11 @@ export default {
 						} else if (!this.$v[input].maxLength) {
 							if (input === 'title') {
 								this.$toast.error(
-									'제목의 길이가 500 이하여야 합니다',
+									'제목의 길이는 500 이하여야 합니다',
 								);
 							} else if (input === 'content') {
 								this.$toast.error(
-									'내용의 길이가 5000 이하여야 합니다',
+									'내용의 길이는 5000 이하여야 합니다',
 								);
 							}
 							break;

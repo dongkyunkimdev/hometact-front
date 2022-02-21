@@ -28,4 +28,20 @@ function getPost(postId) {
 	return axiosService.get('/post/' + postId);
 }
 
-export { getPostList, login, signup, uploadPost, getPost };
+function uploadComment(commentDto) {
+	return axiosService.post('/comment', commentDto);
+}
+
+function deleteComment(commentId) {
+	return axiosService.delete('/comment/' + commentId);
+}
+
+export {
+	getPostList,
+	login,
+	signup,
+	uploadPost,
+	getPost,
+	uploadComment,
+	deleteComment,
+};

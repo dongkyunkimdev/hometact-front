@@ -13,11 +13,11 @@
 			<div class="created">{{ postObj.createdDate }}</div>
 		</div>
 		<div class="row post-info">
-			<div class="post-info-item hart" v-if="postObj.postLikeDtos">
+			<div class="post-info-item" v-if="postObj.postLikeDtos">
 				<img src="@/images/hart.png" class="img-fluid" alt="hart" />
 				{{ postObj.postLikeDtos.length }}
 			</div>
-			<div class="post-info-item" v-if="postObj.commentDtos">
+			<div class="post-info-item ml-1" v-if="postObj.commentDtos">
 				<img
 					src="@/images/comment.png"
 					class="img-fluid ml-05"
@@ -25,7 +25,7 @@
 				/>
 				{{ postObj.commentDtos.length }}
 			</div>
-			<div class="post-info-item">
+			<div class="post-info-item ml-2">
 				<img src="@/images/view.jpg" class="img-fluid" alt="view" />
 				{{ postObj.view }}
 			</div>
@@ -58,8 +58,22 @@
 					/>
 				</div>
 				<div>
-					<h4>{{ comment.userDto.nickname }}</h4>
-					<p>
+					<div>
+						<div class="comment-manage-wrap">
+							<h4>{{ comment.userDto.nickname }}</h4>
+							<template v-if="comment.userDto.email === getEmail">
+								<button>수정</button
+								><button
+									@click.once="
+										deleteCommentAction(comment.commentId)
+									"
+								>
+									삭제
+								</button>
+							</template>
+						</div>
+					</div>
+					<p class="comment-content">
 						{{ comment.content }}
 					</p>
 					<p class="comment-created">{{ comment.createdDate }}</p>
@@ -69,17 +83,15 @@
 		<div class="row write-comment-wrapper">
 			<textarea
 				class="write-comment"
-				name=""
-				id=""
-				cols="30"
-				rows="10"
 				placeholder="댓글을 입력하세요."
+				v-model="comment"
 			></textarea>
 		</div>
 		<div class="row justify-content-end">
 			<button
 				type="button"
 				class="btn btn-outline-primary write-comment-btn bold"
+				@click="uploadCommentAction"
 			>
 				댓글 등록
 			</button>
@@ -92,8 +104,9 @@
 </template>
 
 <script>
-import { getPost } from '@/api/index';
+import { getPost, uploadComment, deleteComment } from '@/api/index';
 import { quillEditor } from 'vue-quill-editor';
+import { required, maxLength } from 'vuelidate/lib/validators';
 
 export default {
 	name: 'viewPost',
@@ -101,6 +114,7 @@ export default {
 		return {
 			postId: this.$route.params.postId,
 			postObj: '',
+			comment: '',
 			logMessage: '',
 			editorOption: {
 				modules: {
@@ -108,6 +122,12 @@ export default {
 				},
 			},
 		};
+	},
+	validations: {
+		comment: {
+			required,
+			maxLength: maxLength(5000),
+		},
 	},
 	mounted() {
 		this.init();
@@ -119,6 +139,45 @@ export default {
 			} catch (error) {
 				this.logMessage = error.response.data;
 			}
+		},
+		async uploadCommentAction() {
+			if (!this.$v['comment'].required) {
+				this.$toast.error('comment is required');
+				return;
+			} else if (!this.$v['comment'].maxLength) {
+				this.$toast.error('댓글의 길이는 5000 이하여야 합니다');
+				return;
+			}
+			try {
+				const commentDto = {
+					postId: this.postId,
+					content: this.comment,
+				};
+
+				await uploadComment(commentDto);
+				this.clearComment();
+				this.init();
+			} catch (error) {
+				this.logMessage = error.response.data;
+				alert(this.logMessage.message);
+			}
+		},
+		async deleteCommentAction(commentId) {
+			try {
+				await deleteComment(commentId);
+				this.init();
+			} catch (error) {
+				this.logMessage = error.response.data;
+				alert(this.logMessage.message);
+			}
+		},
+		clearComment() {
+			this.comment = '';
+		},
+	},
+	computed: {
+		getEmail() {
+			return this.$store.getters.getEmail;
 		},
 	},
 	components: {
@@ -228,7 +287,7 @@ div.post-info {
 	justify-content: flex-end;
 	align-items: center;
 	margin-top: 1rem;
-	margin-right: 1.3rem;
+	margin-right: 2.7rem;
 }
 
 div.post-info-item {
@@ -238,11 +297,6 @@ div.post-info-item {
 	height: 1rem;
 	font-size: 1.2rem;
 	color: #6c757d;
-	margin-right: 1.5rem;
-}
-
-div.post-info-item.hart {
-	margin-right: 1rem !important;
 }
 
 div.post-info-item > img {
@@ -305,5 +359,25 @@ div.comment-wrapper {
 .write-comment-btn {
 	width: 6rem;
 	margin-bottom: 40px;
+}
+
+.comment-manage-wrap {
+	display: flex;
+}
+
+.comment-manage-wrap > button {
+	outline: none;
+	border: none;
+	background-color: #fff;
+	cursor: pointer;
+	padding-bottom: 0.5rem;
+}
+
+.comment-manage-wrap > h4 {
+	margin-right: 1rem;
+}
+
+.comment-content {
+	line-break: anywhere;
 }
 </style>
