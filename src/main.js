@@ -8,6 +8,7 @@ import Vuelidate from 'vuelidate';
 import Toast from 'vue-toastification';
 import VueConfigDialog from 'vue-confirm-dialog';
 import IdleVue from 'idle-vue';
+import InfiniteLoading from 'vue-infinite-loading';
 
 import 'quill/dist/quill.core.css'; // import styles
 import 'quill/dist/quill.snow.css'; // for snow theme
@@ -32,6 +33,7 @@ Vue.use(Vuelidate);
 Vue.use(Toast, toastOptions);
 Vue.use(VueConfigDialog);
 Vue.use(IdleVue, idleOptions);
+Vue.use(InfiniteLoading);
 
 Vue.config.productionTip = false;
 

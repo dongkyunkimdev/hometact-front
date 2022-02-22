@@ -32,7 +32,7 @@
 					aria-label="Basic radio toggle button group"
 				>
 					<input
-						@click="initPost"
+						@click="initPage"
 						v-model="postCategoryId"
 						type="radio"
 						class="btn-check"
@@ -50,7 +50,7 @@
 					>
 					<template v-for="postCategory in postCategoryList">
 						<input
-							@change="searchPostByCategory"
+							@change="initPage"
 							v-model="postCategoryId"
 							type="radio"
 							class="btn-check"
@@ -140,7 +140,7 @@
 				<div
 					class="col post-list"
 					v-for="post in postList"
-					:key="post.postId"
+					:key="'d-' + post.postId"
 				>
 					<div
 						class="card shadow-sm h-100"
@@ -185,6 +185,10 @@
 				</div>
 			</div>
 		</div>
+		<infinite-loading
+			@infinite="infiniteHandler"
+			ref="infiniteLoading"
+		></infinite-loading>
 		<!-- People vector created by pikisuperstar - www.freepik.com -->
 		<!-- Heart doodle vector created by rawpixel.com - www.freepik.com -->
 		<!-- Design vector created by freepik - www.freepik.com -->
@@ -194,6 +198,7 @@
 </template>
 
 <script>
+import InfiniteLoading from 'vue-infinite-loading';
 import {
 	getPostList,
 	getPostCategoryList,
@@ -205,37 +210,19 @@ export default {
 	data: function () {
 		return {
 			logMessage: '',
-			postList: '',
+			postList: [],
 			postCategoryList: '',
 			postCategoryId: '999',
+			page: 0,
 			orderSelected: 'date',
 			eventName: this.$route.params.eventName,
 		};
 	},
 	mounted() {
-		this.initPost();
 		this.initPostCategory();
 		this.eventToast();
 	},
 	methods: {
-		async initPost() {
-			try {
-				this.postList = await (await getPostList()).data;
-			} catch (error) {
-				this.logMessage = error.response.data;
-				this.$toast.error(error.response.data);
-			}
-		},
-		async searchPostByCategory() {
-			try {
-				this.postList = await (
-					await getPostListByCategory(this.postCategoryId)
-				).data;
-			} catch (error) {
-				this.logMessage = error.response.data;
-				this.$toast.error(error.response.data);
-			}
-		},
 		async initPostCategory() {
 			try {
 				this.postCategoryList = await (
@@ -273,11 +260,45 @@ export default {
 				}
 			}
 		},
+		async infiniteHandler($state) {
+			try {
+				let { data } = [];
+				if (this.postCategoryId === '999') {
+					console.log('1');
+					data = await getPostList(this.page);
+				} else {
+					data = await getPostListByCategory(
+						this.postCategoryId,
+						this.page,
+					);
+				}
+				if (data.data.length > 0) {
+					this.page += 1;
+					for (const post of data.data) {
+						this.postList.push(post);
+					}
+					$state.loaded();
+				} else {
+					$state.complete();
+				}
+			} catch (error) {
+				this.logMessage = error.response.data;
+				this.$toast.error(error.response.data);
+			}
+		},
+		initPage() {
+			this.postList = [];
+			this.page = 0;
+			this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+		},
 	},
 	computed: {
 		getEmail() {
 			return this.$store.getters.getEmail;
 		},
+	},
+	components: {
+		InfiniteLoading,
 	},
 };
 </script>
