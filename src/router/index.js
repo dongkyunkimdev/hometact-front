@@ -3,14 +3,6 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-const requireAuth = () => (to, from, next) => {
-	if (router.app.$store.state.accessToken !== '') {
-		return next();
-	}
-	next('/');
-	router.app.$toast.error('로그인이 필요한 기능입니다');
-};
-
 const router = new VueRouter({
 	mode: 'history',
 	routes: [
@@ -27,7 +19,7 @@ const router = new VueRouter({
 			path: '/uploadPost',
 			name: '/uploadPost',
 			component: () => import('@/components/views/UploadPost'),
-			beforeEnter: requireAuth(),
+			meta: { requiresAuth: true },
 		},
 		{
 			path: '/viewPost',
@@ -35,6 +27,23 @@ const router = new VueRouter({
 			component: () => import('@/components/views/ViewPost'),
 		},
 	],
+});
+
+router.beforeEach(function (to, from, next) {
+	if (
+		to.matched.some(function (routeInfo) {
+			return routeInfo.meta.requiresAuth;
+		})
+	) {
+		if (router.app.$store.state.accessToken === '') {
+			next('/');
+			router.app.$toast.error('로그인이 필요한 기능입니다');
+		} else {
+			next();
+		}
+	} else {
+		next();
+	}
 });
 
 export default router;
