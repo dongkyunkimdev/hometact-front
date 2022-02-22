@@ -70,6 +70,69 @@
 				</div>
 			</div>
 		</div>
+		<div class="row order-wrap">
+			<section class="order-section">
+				<div class="order-item order-active">
+					<input
+						class="invisibile"
+						type="radio"
+						id="order-date"
+						v-model="orderSelected"
+						value="date"
+					/>
+					<label
+						class="pointer order-label"
+						:class="{
+							'order-active': orderSelected === 'date',
+							'order-inactive': orderSelected !== 'date',
+						}"
+						for="order-date"
+						><svg
+							stroke="currentColor"
+							fill="currentColor"
+							stroke-width="0"
+							viewBox="0 0 448 512"
+							height="1em"
+							width="1em"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								d="M436 160H12c-6.627 0-12-5.373-12-12v-36c0-26.51 21.49-48 48-48h48V12c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v52h128V12c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v52h48c26.51 0 48 21.49 48 48v36c0 6.627-5.373 12-12 12zM12 192h424c6.627 0 12 5.373 12 12v260c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V204c0-6.627 5.373-12 12-12zm333.296 95.947l-28.169-28.398c-4.667-4.705-12.265-4.736-16.97-.068L194.12 364.665l-45.98-46.352c-4.667-4.705-12.266-4.736-16.971-.068l-28.397 28.17c-4.705 4.667-4.736 12.265-.068 16.97l82.601 83.269c4.667 4.705 12.265 4.736 16.97.068l142.953-141.805c4.705-4.667 4.736-12.265.068-16.97z"
+							></path>
+						</svg>
+						<span class="order-text">최신</span></label
+					>
+					<input
+						class="invisibile"
+						type="radio"
+						id="order-like"
+						v-model="orderSelected"
+						value="like"
+					/>
+					<label
+						class="pointer order-label"
+						:class="{
+							'order-active': orderSelected === 'like',
+							'order-inactive': orderSelected !== 'like',
+						}"
+						for="order-like"
+						><svg
+							stroke="currentColor"
+							fill="currentColor"
+							stroke-width="0"
+							viewBox="0 0 1024 1024"
+							height="1em"
+							width="1em"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								d="M834.1 469.2A347.49 347.49 0 0 0 751.2 354l-29.1-26.7a8.09 8.09 0 0 0-13 3.3l-13 37.3c-8.1 23.4-23 47.3-44.1 70.8-1.4 1.5-3 1.9-4.1 2-1.1.1-2.8-.1-4.3-1.5-1.4-1.2-2.1-3-2-4.8 3.7-60.2-14.3-128.1-53.7-202C555.3 171 510 123.1 453.4 89.7l-41.3-24.3c-5.4-3.2-12.3 1-12 7.3l2.2 48c1.5 32.8-2.3 61.8-11.3 85.9-11 29.5-26.8 56.9-47 81.5a295.64 295.64 0 0 1-47.5 46.1 352.6 352.6 0 0 0-100.3 121.5A347.75 347.75 0 0 0 160 610c0 47.2 9.3 92.9 27.7 136a349.4 349.4 0 0 0 75.5 110.9c32.4 32 70 57.2 111.9 74.7C418.5 949.8 464.5 959 512 959s93.5-9.2 136.9-27.3A348.6 348.6 0 0 0 760.8 857c32.4-32 57.8-69.4 75.5-110.9a344.2 344.2 0 0 0 27.7-136c0-48.8-10-96.2-29.9-140.9z"
+							></path></svg
+						><span class="order-text">인기</span></label
+					>
+				</div>
+			</section>
+		</div>
 		<div class="row post-list-wrapper">
 			<div
 				class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-5 g-3"
@@ -145,6 +208,7 @@ export default {
 			postList: '',
 			postCategoryList: '',
 			postCategoryId: '999',
+			orderSelected: 'date',
 			eventName: this.$route.params.eventName,
 		};
 	},
@@ -277,5 +341,41 @@ div.info-wrap {
 
 .post-list-wrapper {
 	margin-bottom: 10rem;
+}
+
+.order-wrap {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 3rem;
+}
+
+.order-section {
+	display: flex;
+}
+
+.order-active {
+	color: #000;
+}
+.order-item {
+	display: flex;
+	align-items: center;
+	margin-right: 1rem;
+	cursor: pointer;
+	font-weight: 700;
+	font-size: 1.5rem;
+}
+
+.order-text {
+	margin-left: 0.5rem;
+}
+
+.order-inactive {
+	color: #868e96;
+}
+
+.order-label {
+	display: flex;
+	align-items: center;
 }
 </style>
