@@ -178,6 +178,12 @@
 									<small class="text-muted">
 										{{ post.view }}
 									</small>
+									<div
+										class="category-item"
+										v-if="post.postCategoryDto"
+									>
+										{{ post.postCategoryDto.categoryName }}
+									</div>
 								</div>
 							</div>
 						</div>
@@ -398,5 +404,15 @@ div.info-wrap {
 .order-label {
 	display: flex;
 	align-items: center;
+}
+
+div.category-item {
+	background: #dce2f0;
+	border: 2px solid #dce2f0;
+	border-radius: 58px;
+	padding: 0.15rem 0.6rem;
+	font-weight: 500;
+	width: auto;
+	margin-left: 1rem;
 }
 </style>
