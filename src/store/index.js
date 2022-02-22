@@ -14,6 +14,7 @@ export default new Vuex.Store({
 		email: '',
 		nickname: '',
 		accessToken: '',
+		refreshToken: '',
 	},
 	getters: {
 		isLogin(state) {
@@ -33,10 +34,14 @@ export default new Vuex.Store({
 		setAccessToken(state, accessToken) {
 			state.accessToken = accessToken;
 		},
+		setRefreshToken(state, refreshToken) {
+			state.refreshToken = refreshToken;
+		},
 		logout(state) {
 			state.email = '';
 			state.nickname = '';
 			state.accessToken = '';
+			state.refreshToken = '';
 		},
 	},
 });

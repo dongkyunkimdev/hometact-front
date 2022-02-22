@@ -92,8 +92,8 @@ export default {
 				};
 				this.tokenDto = await login(loginDto);
 				this.setVuex(this.email, this.tokenDto);
-				// this.closeModal();
-				this.$router.go('/');
+				this.closeModal();
+				this.$router.push('/');
 			} catch (error) {
 				this.logMessage = error.response.data;
 				if (this.logMessage.errors.length === 0) {
@@ -138,6 +138,7 @@ export default {
 		setVuex(email, tokenDto) {
 			this.$store.commit('setEmail', email);
 			this.$store.commit('setAccessToken', tokenDto.data.accessToken);
+			this.$store.commit('setRefreshToken', tokenDto.data.refreshToken);
 		},
 		closeModal() {
 			this.$emit('close-modal');
