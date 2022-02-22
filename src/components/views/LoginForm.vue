@@ -93,7 +93,7 @@ export default {
 				this.tokenDto = await login(loginDto);
 				this.setVuex(this.email, this.tokenDto);
 				this.closeModal();
-				this.$router.push('/');
+				this.$emit('login-toast');
 			} catch (error) {
 				this.logMessage = error.response.data;
 				if (this.logMessage.errors.length === 0) {
@@ -116,7 +116,7 @@ export default {
 					nickname: this.nickname,
 				};
 				this.userDto = await signup(signupDto);
-				this.closeModal();
+				// this.closeModal();
 				this.loginAction();
 			} catch (error) {
 				this.logMessage = error.response.data;

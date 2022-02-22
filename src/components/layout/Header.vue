@@ -54,7 +54,11 @@
 				</li>
 			</template>
 		</ul>
-		<LoginForm v-if="showLoginForm" @close-modal="showLoginForm = false">
+		<LoginForm
+			v-if="showLoginForm"
+			@close-modal="showLoginForm = false"
+			@login-toast="loginEventToast"
+		>
 		</LoginForm>
 	</div>
 </template>
@@ -77,6 +81,9 @@ export default {
 		},
 		homeRoute() {
 			this.$router.push('/');
+		},
+		loginEventToast() {
+			this.$toast.success(this.getEmail + '님, 환영합니다');
 		},
 	},
 	computed: {
