@@ -270,7 +270,6 @@ export default {
 			try {
 				let { data } = [];
 				if (this.postCategoryId === '999') {
-					console.log('1');
 					data = await getPostList(this.page);
 				} else {
 					data = await getPostListByCategory(

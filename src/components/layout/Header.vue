@@ -84,7 +84,7 @@ export default {
 			this.$router.push('/');
 		},
 		loginEventToast() {
-			this.$toast.success(this.getEmail + '님, 환영합니다');
+			this.$toast.success(this.getNickname + '님, 환영합니다');
 		},
 	},
 	computed: {
@@ -93,6 +93,9 @@ export default {
 		},
 		getEmail() {
 			return this.$store.getters.getEmail;
+		},
+		getNickname() {
+			return this.$store.getters.getNickname;
 		},
 	},
 	components: {

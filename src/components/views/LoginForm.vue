@@ -139,6 +139,7 @@ export default {
 			this.$store.commit('setEmail', email);
 			this.$store.commit('setAccessToken', tokenDto.data.accessToken);
 			this.$store.commit('setRefreshToken', tokenDto.data.refreshToken);
+			this.$store.commit('setNickname', tokenDto.data.nickname);
 		},
 		closeModal() {
 			this.$emit('close-modal');

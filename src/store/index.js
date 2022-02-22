@@ -23,6 +23,9 @@ export default new Vuex.Store({
 		getEmail(state) {
 			return state.email;
 		},
+		getNickname(state) {
+			return state.nickname;
+		},
 	},
 	mutations: {
 		setEmail(state, email) {
