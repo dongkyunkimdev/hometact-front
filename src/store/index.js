@@ -18,7 +18,7 @@ export default new Vuex.Store({
 	},
 	getters: {
 		isLogin(state) {
-			return state.accessToken !== '';
+			return state.accessToken !== '' && state.email !== '';
 		},
 		getEmail(state) {
 			return state.email;
