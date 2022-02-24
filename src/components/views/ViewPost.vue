@@ -5,7 +5,7 @@
 		</div>
 		<div class="profile">
 			<div class="user-info">
-				<img class="user-img" src="@/images/hart.jpg" alt="userImg" />
+				<img class="user-img" src="@/images/man.jpg" alt="userImg" />
 				<div class="user-name" v-if="postObj.userDto">
 					{{ postObj.userDto.nickname }}
 				</div>
@@ -63,7 +63,7 @@
 				<div class="profile-img-wrapper">
 					<img
 						alt="comment-writer"
-						src="@/images/hart.jpg"
+						src="@/images/man.jpg"
 						class="profile-img"
 					/>
 				</div>
@@ -163,7 +163,7 @@ export default {
 				return;
 			}
 			if (!this.$v['comment'].required) {
-				this.$toast.error('comment is required');
+				this.$toast.error('내용을 입력해주세요');
 				return;
 			} else if (!this.$v['comment'].maxLength) {
 				this.$toast.error('댓글의 길이는 5000 이하여야 합니다');
@@ -258,6 +258,7 @@ export default {
 			}
 			try {
 				await likePost(postId);
+				this.$toast.success('좋아요를 누르셨습니다');
 				this.init();
 			} catch (error) {
 				this.logMessage = error.response.data;
@@ -267,6 +268,7 @@ export default {
 		async cancelLikePostAction(postId) {
 			try {
 				await cancelLikePost(postId);
+				this.$toast.success('좋아요를 취소하셨습니다');
 				this.init();
 			} catch (error) {
 				this.logMessage = error.response.data;
@@ -342,14 +344,28 @@ div.profile > .user-info {
 }
 
 div.profile > .user-info > .user-img {
-	width: 2rem;
-	height: 2rem;
+	cursor: pointer;
+	display: block;
+	height: 3rem;
+	width: 3rem;
+	margin-right: 0.25rem;
+	box-shadow: 0 0 8px rgb(0 0 0 / 9%);
+	border-radius: 50%;
+	object-fit: cover;
+	transition: all 0.125s;
+}
+
+div.profile > .user-info > .user-name {
+	cursor: pointer;
+	font-size: 18px;
+	font-weight: 600;
 }
 
 div.profile > .created {
 	margin-top: 1.5rem;
+	font-weight: bold;
 	letter-spacing: -0.005em;
-	color: #6c757d;
+	color: #b1b7bd;
 }
 
 div.profile-item {
@@ -448,8 +464,20 @@ div.comment-wrapper {
 	margin-right: 1rem;
 }
 
+.profile-img-wrapper > img {
+	display: block;
+	height: 3rem;
+	width: 3rem;
+	margin-right: 0.5rem;
+	box-shadow: 0 0 8px rgb(0 0 0 / 9%);
+	border-radius: 50%;
+	object-fit: cover;
+	transition: all 0.125s ease-in 0s;
+}
+
 .comment-created {
-	color: #6c757d;
+	font-weight: bold;
+	color: #b1b7bd;
 }
 
 .write-comment {

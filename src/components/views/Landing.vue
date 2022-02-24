@@ -141,8 +141,9 @@
 					class="col post-list"
 					v-for="post in postList"
 					:key="'d-' + post.postId"
+					@click="viewPost(post.postId)"
 				>
-					<div class="h-100" @click="viewPost(post.postId)">
+					<div class="h-100">
 						<div class="post-body">
 							<p class="card-text">
 								{{ post.title }}
