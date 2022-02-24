@@ -43,7 +43,7 @@
 						key="i-999"
 					/>
 					<label
-						class="btn btn-outline-secondary bold"
+						class="btn btn-outline-secondary bold label-shadow"
 						for="999"
 						key="l-999"
 						>전체</label
@@ -61,7 +61,7 @@
 							:key="'i-' + postCategory.postCategoryId"
 						/>
 						<label
-							class="btn btn-outline-secondary bold"
+							class="btn btn-outline-secondary bold label-shadow"
 							:for="postCategory.postCategoryId"
 							:key="'l-' + postCategory.postCategoryId"
 							>{{ postCategory.categoryName }}</label
@@ -402,6 +402,10 @@ export default {
 
 .btn-group > samll {
 	margin-right: 0.2rem;
+}
+
+.label-shadow {
+	box-shadow: 0 5px 25px rgb(0 0 0 / 5%);
 }
 
 div.info-wrap {
