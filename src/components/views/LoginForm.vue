@@ -70,6 +70,12 @@
 
 <script>
 import { login, signup } from '@/api/index';
+import {
+	required,
+	minLength,
+	maxLength,
+	email,
+} from 'vuelidate/lib/validators';
 
 export default {
 	data: function () {
@@ -83,17 +89,73 @@ export default {
 			isSignup: false,
 		};
 	},
+	validations: {
+		email: {
+			required,
+			email,
+			minLength: minLength(3),
+			maxLength: maxLength(100),
+		},
+		password: {
+			required,
+			minLength: minLength(8),
+			maxLength: maxLength(100),
+		},
+	},
 	methods: {
 		async loginAction() {
 			try {
-				const loginDto = {
-					email: this.email,
-					password: this.password,
-				};
-				this.tokenDto = await login(loginDto);
-				this.setVuex(this.email, this.tokenDto);
-				this.closeModal();
-				this.$emit('login-toast');
+				this.$v.$touch();
+				if (this.$v.$invalid) {
+					for (let key in Object.keys(this.$v)) {
+						const input = Object.keys(this.$v)[key];
+						if (input.includes('$')) return false;
+						if (!this.$v[input].required) {
+							if (input === 'email') {
+								this.$toast.error('이메일을 입력해주세요');
+							} else if (input === 'password') {
+								this.$toast.error('비밀번호를 입력해주세요');
+							}
+							break;
+						} else if (!this.$v[input].minLength) {
+							if (input === 'email') {
+								this.$toast.error(
+									'이메일의 길이는 3 이상이여야 합니다',
+								);
+							} else if (input === 'password') {
+								this.$toast.error(
+									'비밀번호의 길이는 8 이상이여야 합니다',
+								);
+							}
+							break;
+						} else if (!this.$v[input].maxLength) {
+							if (input === 'email') {
+								this.$toast.error(
+									'이메일의 길이는 100 이하여야 합니다',
+								);
+							} else if (input === 'password') {
+								this.$toast.error(
+									'비밀번호의 길이는 100 이하여야 합니다',
+								);
+							}
+							break;
+						} else if (!this.$v[input].email) {
+							if (input === 'email') {
+								this.$toast.error('이메일 형식이어야 합니다');
+							}
+							break;
+						}
+					}
+				} else {
+					const loginDto = {
+						email: this.email,
+						password: this.password,
+					};
+					this.tokenDto = await login(loginDto);
+					this.setVuex(this.email, this.tokenDto);
+					this.closeModal();
+					this.$emit('login-toast');
+				}
 			} catch (error) {
 				this.logMessage = error.response.data;
 				if (this.logMessage.errors.length === 0) {
@@ -110,14 +172,57 @@ export default {
 		},
 		async signupAction() {
 			try {
-				const signupDto = {
-					email: this.email,
-					password: this.password,
-					nickname: this.nickname,
-				};
-				this.userDto = await signup(signupDto);
-				// this.closeModal();
-				this.loginAction();
+				this.$v.$touch();
+				if (this.$v.$invalid) {
+					for (let key in Object.keys(this.$v)) {
+						const input = Object.keys(this.$v)[key];
+						if (input.includes('$')) return false;
+						if (!this.$v[input].required) {
+							if (input === 'email') {
+								this.$toast.error('이메일을 입력해주세요');
+							} else if (input === 'password') {
+								this.$toast.error('비밀번호를 입력해주세요');
+							}
+							break;
+						} else if (!this.$v[input].minLength) {
+							if (input === 'email') {
+								this.$toast.error(
+									'이메일의 길이는 3 이상이여야 합니다',
+								);
+							} else if (input === 'password') {
+								this.$toast.error(
+									'비밀번호의 길이는 8 이상이여야 합니다',
+								);
+							}
+							break;
+						} else if (!this.$v[input].maxLength) {
+							if (input === 'email') {
+								this.$toast.error(
+									'이메일의 길이는 100 이하여야 합니다',
+								);
+							} else if (input === 'password') {
+								this.$toast.error(
+									'비밀번호의 길이는 100 이하여야 합니다',
+								);
+							}
+							break;
+						} else if (!this.$v[input].email) {
+							if (input === 'email') {
+								this.$toast.error('이메일 형식이어야 합니다');
+							}
+							break;
+						}
+					}
+				} else {
+					const signupDto = {
+						email: this.email,
+						password: this.password,
+						nickname: this.nickname,
+					};
+					this.userDto = await signup(signupDto);
+					// this.closeModal();
+					this.loginAction();
+				}
 			} catch (error) {
 				this.logMessage = error.response.data;
 				if (this.logMessage.errors.length === 0) {

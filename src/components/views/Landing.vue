@@ -236,6 +236,7 @@ export default {
 				).data;
 			} catch (error) {
 				this.logMessage = error.response.data;
+				this.$toast.error(error.response.data);
 			}
 		},
 		viewPost(postId) {
