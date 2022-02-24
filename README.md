@@ -1,4 +1,4 @@
-# 홈택트
+# [홈택트](https://www.hometact.ml/)
 ## 1. 개요
 비대면 모임 커뮤니티 '홈택트' Front-end
 
