@@ -301,6 +301,7 @@ div.title {
 	line-height: 126.5%;
 	letter-spacing: -0.005em;
 	color: #000;
+	overflow-wrap: anywhere;
 }
 
 @media (min-width: 1400px) {

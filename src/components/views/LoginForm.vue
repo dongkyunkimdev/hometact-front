@@ -56,11 +56,10 @@
 						@click="signupAction"
 						v-else
 					>
-						SignUp
+						Sign up
 					</button>
 				</form>
 				<div class="text-center fs-6" v-if="!isSignup">
-					<a href="#">Forget password?</a> or
 					<a @click="isSignup = true" href="#">Sign up</a>
 				</div>
 			</div>

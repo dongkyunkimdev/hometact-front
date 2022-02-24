@@ -142,14 +142,17 @@
 					v-for="post in postList"
 					:key="'d-' + post.postId"
 				>
-					<div
-						class="card shadow-sm h-100"
-						@click="viewPost(post.postId)"
-					>
-						<div class="card-body">
+					<div class="h-100" @click="viewPost(post.postId)">
+						<div class="post-body">
 							<p class="card-text">
 								{{ post.title }}
 							</p>
+							<div
+								class="category-item"
+								v-if="post.postCategoryDto"
+							>
+								{{ post.postCategoryDto.categoryName }}
+							</div>
 							<div
 								class="d-flex justify-content-between align-items-center info-wrap"
 							>
@@ -178,12 +181,6 @@
 									<small class="text-muted">
 										{{ post.view }}
 									</small>
-									<div
-										class="category-item"
-										v-if="post.postCategoryDto"
-									>
-										{{ post.postCategoryDto.categoryName }}
-									</div>
 								</div>
 							</div>
 						</div>
@@ -191,10 +188,9 @@
 				</div>
 			</div>
 		</div>
-		<infinite-loading
-			@infinite="infiniteHandler"
-			ref="infiniteLoading"
-		></infinite-loading>
+		<infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
+			<span slot="no-more"></span>
+		</infinite-loading>
 		<!-- People vector created by pikisuperstar - www.freepik.com -->
 		<!-- Heart doodle vector created by rawpixel.com - www.freepik.com -->
 		<!-- Design vector created by freepik - www.freepik.com -->
@@ -310,9 +306,20 @@ export default {
 </script>
 
 <style scoped>
-@media (min-width: 992px) {
+@media (max-width: 1300px) {
+	.main-intro {
+		width: 80%;
+		margin: auto;
+	}
+}
+
+@media (min-width: 576px) {
 	.category-wrap {
-		margin-top: 3rem;
+		margin-top: 2rem;
+	}
+	.row-cols-sm-2 > * {
+		flex: 0 0 auto;
+		width: 45%;
 	}
 }
 
@@ -320,33 +327,68 @@ export default {
 	.category-wrap {
 		margin-top: 5rem;
 	}
-}
 
-@media (min-width: 576px) {
-	.category-wrap {
-		margin-top: 4rem;
+	.row-cols-md-3 > * {
+		flex: 0 0 auto;
+		width: 30%;
 	}
 }
 
-@media (max-width: 1400px) {
-	.main-intro {
-		width: 80%;
-		margin: auto;
+@media (min-width: 992px) {
+	.category-wrap {
+		margin-top: 3rem;
+	}
+}
+
+@media (min-width: 1200px) {
+	.row-cols-xl-5 > * {
+		flex: 0 0 auto;
+		width: 22.5%;
+	}
+}
+
+@media (max-width: 576px) {
+	.container-sm,
+	.container {
+		width: 90%;
+	}
+
+	.category-wrap {
+		margin-top: 2rem;
+	}
+}
+
+@media screen and (min-width: 1700px) {
+	.container-sm,
+	.container {
+		width: 1400px;
+	}
+	.row-cols-xl-5 > * {
+		flex: 0 0 auto;
+		width: 18%;
 	}
 }
 
 .post-list {
-	height: 13rem;
+	height: 15rem;
+	margin: 0.625rem;
+	padding: 1.5rem;
+	box-shadow: 0 5px 25px rgb(0 0 0 / 15%);
+	border-radius: 1.5rem;
+	cursor: pointer;
 }
 
 .card-text {
 	text-align: center;
-	height: 3rem;
+	height: 4.5rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: -webkit-box;
-	-webkit-line-clamp: 2;
+	-webkit-line-clamp: 3;
 	-webkit-box-orient: vertical;
+	border: none;
+	margin-top: 1rem;
+	overflow-wrap: anywhere;
 }
 
 .btn-group {
@@ -363,7 +405,7 @@ export default {
 }
 
 div.info-wrap {
-	margin-top: 6.5rem;
+	padding-top: 1rem;
 }
 
 .post-list-wrapper {
@@ -412,7 +454,8 @@ div.category-item {
 	border-radius: 58px;
 	padding: 0.15rem 0.6rem;
 	font-weight: 500;
-	width: auto;
-	margin-left: 1rem;
+	width: 4.3rem;
+	text-align: center;
+	margin: 2.5rem auto 0 auto;
 }
 </style>
