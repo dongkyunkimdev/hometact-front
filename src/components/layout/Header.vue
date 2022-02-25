@@ -211,4 +211,16 @@ button {
 	font-weight: bold;
 	cursor: pointer;
 }
+
+@media screen and (max-width: 575px) {
+	.nav-post-write {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.userInfo-name {
+		display: none;
+	}
+}
 </style>
