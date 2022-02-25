@@ -74,17 +74,19 @@
 			<section class="order-section">
 				<div class="order-item order-active">
 					<input
+						@click="initPage"
 						class="invisibile"
 						type="radio"
 						id="order-date"
 						v-model="orderSelected"
-						value="date"
+						value="createdDate"
 					/>
 					<label
+						@click="initPage"
 						class="pointer order-label"
 						:class="{
-							'order-active': orderSelected === 'date',
-							'order-inactive': orderSelected !== 'date',
+							'order-active': orderSelected === 'createdDate',
+							'order-inactive': orderSelected !== 'createdDate',
 						}"
 						for="order-date"
 						><svg
@@ -103,17 +105,19 @@
 						<span class="order-text">최신</span></label
 					>
 					<input
+						@click="initPage"
 						class="invisibile"
 						type="radio"
 						id="order-like"
 						v-model="orderSelected"
-						value="like"
+						value="postLikes"
 					/>
 					<label
+						@click="initPage"
 						class="pointer order-label"
 						:class="{
-							'order-active': orderSelected === 'like',
-							'order-inactive': orderSelected !== 'like',
+							'order-active': orderSelected === 'postLikes',
+							'order-inactive': orderSelected !== 'postLikes',
 						}"
 						for="order-like"
 						><svg
@@ -129,6 +133,40 @@
 								d="M834.1 469.2A347.49 347.49 0 0 0 751.2 354l-29.1-26.7a8.09 8.09 0 0 0-13 3.3l-13 37.3c-8.1 23.4-23 47.3-44.1 70.8-1.4 1.5-3 1.9-4.1 2-1.1.1-2.8-.1-4.3-1.5-1.4-1.2-2.1-3-2-4.8 3.7-60.2-14.3-128.1-53.7-202C555.3 171 510 123.1 453.4 89.7l-41.3-24.3c-5.4-3.2-12.3 1-12 7.3l2.2 48c1.5 32.8-2.3 61.8-11.3 85.9-11 29.5-26.8 56.9-47 81.5a295.64 295.64 0 0 1-47.5 46.1 352.6 352.6 0 0 0-100.3 121.5A347.75 347.75 0 0 0 160 610c0 47.2 9.3 92.9 27.7 136a349.4 349.4 0 0 0 75.5 110.9c32.4 32 70 57.2 111.9 74.7C418.5 949.8 464.5 959 512 959s93.5-9.2 136.9-27.3A348.6 348.6 0 0 0 760.8 857c32.4-32 57.8-69.4 75.5-110.9a344.2 344.2 0 0 0 27.7-136c0-48.8-10-96.2-29.9-140.9z"
 							></path></svg
 						><span class="order-text">인기</span></label
+					>
+					<input
+						@click="initPage"
+						class="invisibile"
+						type="radio"
+						id="order-view"
+						v-model="orderSelected"
+						value="view"
+					/>
+					<label
+						@click="initPage"
+						class="pointer order-label"
+						:class="{
+							'order-active': orderSelected === 'view',
+							'order-inactive': orderSelected !== 'view',
+						}"
+						for="order-view"
+						><svg
+							stroke="currentColor"
+							fill="currentColor"
+							stroke-width="0"
+							viewBox="0 0 22 22"
+							height="1em"
+							width="1em"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<g transform="matrix(.02146 0 0 .02146 1 1)">
+								<path
+									d="m466.07 161.53c-205.6 0-382.8 121.2-464.2 296.1-2.5 5.3-2.5 11.5 0 16.9 81.4 174.9 258.6 296.1 464.2 296.1 205.6 0 382.8-121.2 464.2-296.1 2.5-5.3 2.5-11.5 0-16.9-81.4-174.9-258.6-296.1-464.2-296.1m0 514.7c-116.1 0-210.1-94.1-210.1-210.1 0-116.1 94.1-210.1 210.1-210.1 116.1 0 210.1 94.1 210.1 210.1 0 116-94.1 210.1-210.1 210.1"
+								/>
+								<circle cx="466.08" cy="466.02" r="134.5" />
+							</g>
+						</svg>
+						<span class="order-text">조회</span></label
 					>
 				</div>
 			</section>
@@ -217,7 +255,7 @@ export default {
 			postCategoryList: '',
 			postCategoryId: '999',
 			page: 0,
-			orderSelected: 'date',
+			orderSelected: 'createdDate',
 			eventName: this.$route.params.eventName,
 		};
 	},
@@ -268,11 +306,12 @@ export default {
 			try {
 				let { data } = [];
 				if (this.postCategoryId === '999') {
-					data = await getPostList(this.page);
+					data = await getPostList(this.page, this.orderSelected);
 				} else {
 					data = await getPostListByCategory(
 						this.postCategoryId,
 						this.page,
+						this.orderSelected,
 					);
 				}
 				if (data.data.length > 0) {

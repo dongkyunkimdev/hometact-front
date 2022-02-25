@@ -44,17 +44,22 @@ async function tokenRefresh() {
 	store.commit('setAccessToken', responseRefresh.data.accessToken);
 }
 
-function getPostList(page) {
-	return axiosService.get('/post?page=' + page);
+function getPostList(page, order) {
+	return axiosService.get('/post?page=' + page + '&order=' + order);
 }
 
 function getPostListByOrder(orderName) {
 	return axiosService.get('/post/order/' + orderName);
 }
 
-function getPostListByCategory(postCategoryId, page) {
+function getPostListByCategory(postCategoryId, page, order) {
 	return axiosService.get(
-		'/post/category/' + postCategoryId + '?page=' + page,
+		'/post/category/' +
+			postCategoryId +
+			'?page=' +
+			page +
+			'&order=' +
+			order,
 	);
 }
 
