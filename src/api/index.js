@@ -45,20 +45,20 @@ async function tokenRefresh() {
 }
 
 function getPostList(page, order) {
-	return axiosService.get('/post?page=' + page + '&order=' + order);
+	return axiosService.get('/post/get?page=' + page + '&order=' + order);
 }
 
 function getMyPostList(page) {
 	return axiosService.get('/post/my/post?page=' + page);
 }
 
-function getPostListByOrder(orderName) {
-	return axiosService.get('/post/order/' + orderName);
+function getMyLikePostList(page) {
+	return axiosService.get('/post/my/like?page=' + page);
 }
 
 function getPostListByCategory(postCategoryId, page, order) {
 	return axiosService.get(
-		'/post/category/' +
+		'/post/get/category/' +
 			postCategoryId +
 			'?page=' +
 			page +
@@ -84,7 +84,7 @@ function uploadPost(postDto) {
 }
 
 function getPost(postId) {
-	return axiosService.get('/post/' + postId);
+	return axiosService.get('/post/get/' + postId);
 }
 
 function deletePost(postId) {
@@ -114,7 +114,7 @@ function deleteComment(commentId) {
 export {
 	getPostList,
 	getMyPostList,
-	getPostListByOrder,
+	getMyLikePostList,
 	getPostCategoryList,
 	login,
 	signup,
