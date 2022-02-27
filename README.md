@@ -1,6 +1,6 @@
 # [홈택트](https://www.hometact.ml/)
 ## 1. 개요
-비대면 모임 커뮤니티 '홈택트' Front-end
+비대면 모임 빌딩 플랫폼 '홈택트' Front-end
 
 ## 2. 프로젝트 환경
 - Editor : VS Code
