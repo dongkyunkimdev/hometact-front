@@ -49,7 +49,7 @@ function getPostList(page, order) {
 }
 
 function getMyPostList(page) {
-	return axiosService.get('/post/my?page=' + page);
+	return axiosService.get('/post/my/post?page=' + page);
 }
 
 function getPostListByOrder(orderName) {
