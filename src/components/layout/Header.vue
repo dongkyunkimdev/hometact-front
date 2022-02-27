@@ -20,7 +20,7 @@
 					v-if="isLogin"
 					@click.stop="showDropDown = !showDropDown"
 				>
-					<div class="userInfo-name">마동균</div>
+					<div class="userInfo-name">{{ getNickname }}</div>
 					<img
 						class="userInfo-img"
 						src="@/images/man.jpg"
@@ -55,21 +55,7 @@
 		</nav>
 		<ul
 			class="nav justify-content-end list-inline text-center d-flex justify-content-center align-items-center m-4"
-		>
-			<!-- 
-			<template v-else>
-				<li class="nav-item">
-					<button
-						class="btn btn-link nav-link link-secondary"
-						@click="logout"
-					>
-						<h5 class="bold m-0 nav-link link-secondary">
-							로그아웃
-						</h5>
-					</button>
-				</li>
-			</template> -->
-		</ul>
+		></ul>
 		<p v-on-clickaway="away"></p>
 		<LoginForm
 			v-if="showLoginForm"
@@ -119,9 +105,6 @@ export default {
 	computed: {
 		isLogin() {
 			return this.$store.getters.isLogin;
-		},
-		getEmail() {
-			return this.$store.getters.getEmail;
 		},
 		getNickname() {
 			return this.$store.getters.getNickname;
