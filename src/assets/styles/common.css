@@ -57,3 +57,7 @@
 .pointer {
     cursor: pointer;
 }
+
+.mb-40 {
+    margin-bottom: 40px;
+}

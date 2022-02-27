@@ -60,7 +60,7 @@
 					</button>
 				</form>
 				<div class="text-center fs-6" v-if="!isSignup">
-					<a @click="isSignup = true" href="#">Sign up</a>
+					<span @click="isSignup = true">Sign up</span>
 				</div>
 			</div>
 		</div>
@@ -362,13 +362,14 @@ body {
 	background-color: #039be5;
 }
 
-.wrapper a {
+.wrapper span {
 	text-decoration: none;
 	font-size: 0.8rem;
 	color: #03a9f4;
+	cursor: pointer;
 }
 
-.wrapper a:hover {
+.wrapper span:hover {
 	color: #039be5;
 }
 

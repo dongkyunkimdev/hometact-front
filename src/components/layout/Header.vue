@@ -44,7 +44,15 @@
 							<li class="dropdown-items" @click="myLikeRoute">
 								내 관심글
 							</li>
-							<li class="dropdown-items">설정</li>
+							<li
+								class="dropdown-items"
+								@click.stop="
+									(showSettingForm = true),
+										(showDropDown = false)
+								"
+							>
+								설정
+							</li>
 							<li class="dropdown-items" @click="logout">
 								로그아웃
 							</li>
@@ -63,11 +71,18 @@
 			@login-toast="loginEventToast"
 		>
 		</LoginForm>
+		<UserSetting
+			v-if="showSettingForm"
+			@close-modal="showSettingForm = false"
+			@nickname-update-toast="updateNicknameEventToast"
+		>
+		</UserSetting>
 	</div>
 </template>
 
 <script>
 import LoginForm from '@/components/views/LoginForm.vue';
+import UserSetting from '@/components/views/UserSetting.vue';
 import { mixin as clickaway } from 'vue-clickaway';
 
 export default {
@@ -76,6 +91,7 @@ export default {
 		return {
 			showLoginForm: false,
 			showDropDown: false,
+			showSettingForm: false,
 		};
 	},
 	methods: {
@@ -92,6 +108,9 @@ export default {
 		loginEventToast() {
 			this.$toast.success(this.getNickname + '님, 환영합니다');
 		},
+		updateNicknameEventToast() {
+			this.$toast.success('닉네임이 변경되었습니다');
+		},
 		away() {
 			this.showDropDown = false;
 		},
@@ -100,6 +119,9 @@ export default {
 		},
 		myLikeRoute() {
 			this.$router.push('/mylike');
+		},
+		userSettingRoute() {
+			this.$router.push('/usersetting');
 		},
 	},
 	computed: {
@@ -112,6 +134,7 @@ export default {
 	},
 	components: {
 		LoginForm,
+		UserSetting,
 	},
 };
 </script>

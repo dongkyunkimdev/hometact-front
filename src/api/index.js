@@ -111,6 +111,10 @@ function deleteComment(commentId) {
 	return axiosService.delete('/comment/' + commentId);
 }
 
+function updateNickname(updateDto) {
+	return axiosService.patch('/user/updateNickname', updateDto);
+}
+
 export {
 	getPostList,
 	getMyPostList,
@@ -127,4 +131,5 @@ export {
 	uploadComment,
 	deleteComment,
 	getPostListByCategory,
+	updateNickname,
 };
