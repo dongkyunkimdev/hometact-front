@@ -36,7 +36,7 @@
 						<span class="fas fa-key"></span>
 						<input
 							v-model="nickname"
-							type="nickname"
+							type="text"
 							name="nickname"
 							id="nickname"
 							placeholder="Nickname"
@@ -119,11 +119,11 @@ export default {
 						} else if (!this.$v[input].minLength) {
 							if (input === 'email') {
 								this.$toast.error(
-									'이메일의 길이는 3 이상이여야 합니다',
+									'이메일의 길이는 3 이상이어야 합니다',
 								);
 							} else if (input === 'password') {
 								this.$toast.error(
-									'비밀번호의 길이는 8 이상이여야 합니다',
+									'비밀번호의 길이는 8 이상이어야 합니다',
 								);
 							}
 							break;
@@ -186,11 +186,11 @@ export default {
 						} else if (!this.$v[input].minLength) {
 							if (input === 'email') {
 								this.$toast.error(
-									'이메일의 길이는 3 이상이여야 합니다',
+									'이메일의 길이는 3 이상이어야 합니다',
 								);
 							} else if (input === 'password') {
 								this.$toast.error(
-									'비밀번호의 길이는 8 이상이여야 합니다',
+									'비밀번호의 길이는 8 이상이어야 합니다',
 								);
 							}
 							break;

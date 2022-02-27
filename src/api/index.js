@@ -115,6 +115,10 @@ function updateNickname(updateDto) {
 	return axiosService.patch('/user/updateNickname', updateDto);
 }
 
+function updatePassword(updateDto) {
+	return axiosService.patch('/user/updatePassword', updateDto);
+}
+
 export {
 	getPostList,
 	getMyPostList,
@@ -132,4 +136,5 @@ export {
 	deleteComment,
 	getPostListByCategory,
 	updateNickname,
+	updatePassword,
 };

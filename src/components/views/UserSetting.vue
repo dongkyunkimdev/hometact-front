@@ -9,7 +9,7 @@
 						<span class="fas fa-key"></span>
 						<input
 							v-model="originalPassword"
-							type="originalPassword"
+							type="password"
 							name="originalPassword"
 							id="originalPassword"
 							placeholder="기존 비밀번호"
@@ -19,20 +19,24 @@
 						<span class="fas fa-key"></span>
 						<input
 							v-model="newPassword"
-							type="newPassword"
+							type="password"
 							name="newPassword"
 							id="newPassword"
-							placeholder="변경할 비밀번호"
+							placeholder="변경 비밀번호"
 						/>
 					</div>
-					<button type="button" class="btn mb-40">
+					<button
+						type="button"
+						class="btn mb-40"
+						@click="updatePasswordAction"
+					>
 						비밀번호 변경
 					</button>
 					<div class="form-field d-flex align-items-center">
 						<span class="fas fa-key"></span>
 						<input
 							v-model="nickname"
-							type="nickname"
+							type="text"
 							name="nickname"
 							id="nickname"
 							:placeholder="getNickname"
@@ -55,7 +59,7 @@
 </template>
 
 <script>
-import { updateNickname } from '@/api/index';
+import { updateNickname, updatePassword } from '@/api/index';
 import { required, minLength, maxLength } from 'vuelidate/lib/validators';
 
 export default {
@@ -64,7 +68,6 @@ export default {
 			originalPassword: '',
 			newPassword: '',
 			nickname: '',
-			updateDto: '',
 			logMessage: '',
 		};
 	},
@@ -97,7 +100,7 @@ export default {
 						this.$toast.error('닉네임을 입력해주세요');
 					} else if (!this.$v.nickname.minLength) {
 						this.$toast.error(
-							'닉네임의 길이는 3 이상이여야 합니다',
+							'닉네임의 길이는 3 이상이어야 합니다',
 						);
 					} else if (!this.$v.nickname.maxLength) {
 						this.$toast.error('닉네임의 길이는 20 이하여야 합니다');
@@ -122,7 +125,56 @@ export default {
 							this.logMessage.errors[0].reason,
 					);
 				}
-				this.initPassword();
+			}
+		},
+		async updatePasswordAction() {
+			try {
+				this.$v.$touch();
+				if (
+					this.$v.originalPassword.$invalid ||
+					this.$v.newPassword.$invalid
+				) {
+					if (!this.$v.originalPassword.required) {
+						this.$toast.error('기존 비밀번호를 입력해주세요');
+					} else if (!this.$v.originalPassword.minLength) {
+						this.$toast.error(
+							'기존 비밀번호의 길이는 8 이상이어야 합니다',
+						);
+					} else if (!this.$v.originalPassword.maxLength) {
+						this.$toast.error(
+							'기존 비밀번호의 길이는 길이는 100 이하여야 합니다',
+						);
+					} else if (!this.$v.newPassword.required) {
+						this.$toast.error('변경할 비밀번호를 입력해주세요');
+					} else if (!this.$v.newPassword.minLength) {
+						this.$toast.error(
+							'변경할 비밀번호의 길이는 8 이상이어야 합니다',
+						);
+					} else if (!this.$v.newPassword.maxLength) {
+						this.$toast.error(
+							'변경할 비밀번호의 길이는 100 이하여야 합니다',
+						);
+					}
+				} else {
+					const updateDto = {
+						originalPassword: this.originalPassword,
+						newPassword: this.newPassword,
+					};
+					await updatePassword(updateDto);
+					this.closeModal();
+					this.$emit('password-update-toast');
+				}
+			} catch (error) {
+				this.logMessage = error.response.data;
+				if (this.logMessage.errors.length === 0) {
+					this.$toast.error(this.logMessage.message);
+				} else {
+					this.$toast.error(
+						this.logMessage.errors[0].field +
+							' ' +
+							this.logMessage.errors[0].reason,
+					);
+				}
 			}
 		},
 		setVuexNickname(nickname) {

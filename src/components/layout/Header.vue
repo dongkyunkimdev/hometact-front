@@ -75,6 +75,7 @@
 			v-if="showSettingForm"
 			@close-modal="showSettingForm = false"
 			@nickname-update-toast="updateNicknameEventToast"
+			@password-update-toast="updatePasswordEventToast"
 		>
 		</UserSetting>
 	</div>
@@ -96,7 +97,7 @@ export default {
 	},
 	methods: {
 		logout() {
-			this.$store.commit('logout', '');
+			this.$store.commit('logout');
 			this.$router.push('/');
 		},
 		uploadPostRoute() {
@@ -110,6 +111,12 @@ export default {
 		},
 		updateNicknameEventToast() {
 			this.$toast.success('닉네임이 변경되었습니다');
+		},
+		updatePasswordEventToast() {
+			this.$store.commit('logout');
+			this.$toast.success(
+				'비밀번호가 변경되었습니다, 다시 로그인 해주세요',
+			);
 		},
 		away() {
 			this.showDropDown = false;
