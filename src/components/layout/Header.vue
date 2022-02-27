@@ -38,7 +38,9 @@
 					</svg>
 					<div class="nav-dropdown-wrap" v-if="showDropDown">
 						<ul class="dropdown-list">
-							<li class="dropdown-items">내 작성글</li>
+							<li class="dropdown-items" @click="myPostRoute">
+								내 작성글
+							</li>
 							<li class="dropdown-items">내 관심글</li>
 							<li class="dropdown-items">설정</li>
 							<li class="dropdown-items" @click="logout">
@@ -104,7 +106,9 @@ export default {
 		},
 		away() {
 			this.showDropDown = false;
-			console.log('away');
+		},
+		myPostRoute() {
+			this.$router.push('/mypost');
 		},
 	},
 	computed: {

@@ -334,11 +334,6 @@ export default {
 			this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
 		},
 	},
-	computed: {
-		getEmail() {
-			return this.$store.getters.getEmail;
-		},
-	},
 	components: {
 		InfiniteLoading,
 	},

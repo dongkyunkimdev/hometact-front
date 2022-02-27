@@ -48,6 +48,10 @@ function getPostList(page, order) {
 	return axiosService.get('/post?page=' + page + '&order=' + order);
 }
 
+function getMyPostList(page) {
+	return axiosService.get('/post/my?page=' + page);
+}
+
 function getPostListByOrder(orderName) {
 	return axiosService.get('/post/order/' + orderName);
 }
@@ -109,6 +113,7 @@ function deleteComment(commentId) {
 
 export {
 	getPostList,
+	getMyPostList,
 	getPostListByOrder,
 	getPostCategoryList,
 	login,

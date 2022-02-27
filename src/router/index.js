@@ -26,6 +26,11 @@ const router = new VueRouter({
 			name: '/viewPost',
 			component: () => import('@/components/views/ViewPost'),
 		},
+		{
+			path: '/myPost',
+			component: () => import('@/components/views/MyPost'),
+			meta: { requiresAuth: true },
+		},
 	],
 });
 
