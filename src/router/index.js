@@ -31,6 +31,11 @@ const router = new VueRouter({
 			component: () => import('@/components/views/MyPost'),
 			meta: { requiresAuth: true },
 		},
+		{
+			path: '/myLike',
+			component: () => import('@/components/views/MyLike'),
+			meta: { requiresAuth: true },
+		},
 	],
 });
 

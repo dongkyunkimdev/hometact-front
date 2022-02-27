@@ -41,7 +41,9 @@
 							<li class="dropdown-items" @click="myPostRoute">
 								내 작성글
 							</li>
-							<li class="dropdown-items">내 관심글</li>
+							<li class="dropdown-items" @click="myLikeRoute">
+								내 관심글
+							</li>
 							<li class="dropdown-items">설정</li>
 							<li class="dropdown-items" @click="logout">
 								로그아웃
@@ -109,6 +111,9 @@ export default {
 		},
 		myPostRoute() {
 			this.$router.push('/mypost');
+		},
+		myLikeRoute() {
+			this.$router.push('/mylike');
 		},
 	},
 	computed: {
