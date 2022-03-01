@@ -191,6 +191,7 @@ export default {
 					if (confirm) {
 						try {
 							await withdrawal();
+							this.closeModal();
 							this.$emit('withdrawal-toast');
 						} catch (error) {
 							this.logMessage = error.response.data;
