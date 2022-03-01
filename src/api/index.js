@@ -119,6 +119,10 @@ function updatePassword(updateDto) {
 	return axiosService.patch('/user/updatePassword', updateDto);
 }
 
+function withdrawal() {
+	return axiosService.delete('/user/withdrawal');
+}
+
 export {
 	getPostList,
 	getMyPostList,
@@ -137,4 +141,5 @@ export {
 	getPostListByCategory,
 	updateNickname,
 	updatePassword,
+	withdrawal,
 };

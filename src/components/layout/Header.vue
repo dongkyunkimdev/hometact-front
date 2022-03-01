@@ -76,6 +76,7 @@
 			@close-modal="showSettingForm = false"
 			@nickname-update-toast="updateNicknameEventToast"
 			@password-update-toast="updatePasswordEventToast"
+			@withdrawal-toast="withdrawalEventToast"
 		>
 		</UserSetting>
 	</div>
@@ -117,6 +118,10 @@ export default {
 			this.$toast.success(
 				'비밀번호가 변경되었습니다, 다시 로그인 해주세요',
 			);
+		},
+		withdrawalEventToast() {
+			this.$store.commit('logout');
+			this.$toast.success('회원탈퇴가 완료되었습니다.');
 		},
 		away() {
 			this.showDropDown = false;

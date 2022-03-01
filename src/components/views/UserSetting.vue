@@ -51,7 +51,7 @@
 					</button>
 				</form>
 				<div class="text-center fs-6">
-					<span>회원 탈퇴</span>
+					<span @click="withdrawalAction">회원 탈퇴</span>
 				</div>
 			</div>
 		</div>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { updateNickname, updatePassword } from '@/api/index';
+import { updateNickname, updatePassword, withdrawal } from '@/api/index';
 import { required, minLength, maxLength } from 'vuelidate/lib/validators';
 
 export default {
@@ -179,6 +179,26 @@ export default {
 		},
 		setVuexNickname(nickname) {
 			this.$store.commit('setNickname', nickname);
+		},
+		withdrawalAction() {
+			this.$confirm({
+				message: '관련된 데이터가 모두 삭제됩니다. 탈퇴하시겠습니까?',
+				button: {
+					no: '아니오',
+					yes: '예',
+				},
+				callback: async confirm => {
+					if (confirm) {
+						try {
+							await withdrawal();
+							this.$emit('withdrawal-toast');
+						} catch (error) {
+							this.logMessage = error.response.data;
+							this.$toast.error(this.logMessage.message);
+						}
+					}
+				},
+			});
 		},
 	},
 	computed: {
