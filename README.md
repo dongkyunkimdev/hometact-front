@@ -1,6 +1,6 @@
 # [홈택트](https://www.hometact.ml/)
 ## 개요
-비대면 모임 빌딩 플랫폼 '홈택트' Front-end
+비대면 모임 빌딩 플랫폼 '홈택트' Front-end  
 [Back-end 링크](https://github.com/dongkyunkimdev/hometact-backend/blob/master/README.md)
 
 ## 목표
